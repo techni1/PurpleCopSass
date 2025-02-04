@@ -1,0 +1,275 @@
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Offcanvas,
+  Row,
+  Form,
+  Button,
+} from "react-bootstrap";
+import { useForm } from "@inertiajs/react";
+
+export default function AssetsDetails({ show, setShow, asset, risks }: any) {
+  const { data, setData, post, processing, errors, reset } = useForm({
+    isunderrisk: "",
+    risk: [],
+    assetid: asset.id,
+    assetvalue: "",
+    assetimpact: "",
+  });
+
+  useEffect(() => {
+    setData("assetid", asset.id); // Ensure assetid is set on component mount
+  }, [asset]);
+
+  const handleClose = () => setShow(false);
+
+  const [values, setValues] = useState({
+    c: 0,
+    i: 0,
+    a: 0,
+  });
+
+  const [largest, setLargest] = useState(0);
+
+  useEffect(() => {
+    const largestValue = Math.max(values.c, values.i, values.a);
+    setLargest(largestValue);
+    setData("assetvalue", largestValue); // Ensure `assetvalue` is updated in the form data
+  }, [values]);
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    if (name === "risk") {
+      const selectedOptions = Array.from(
+        e.target.selectedOptions,
+        (option) => option.value
+      );
+      setData(name, selectedOptions);
+    } else {
+      setValues({
+        ...values,
+        [name]: parseInt(value, 10),
+      });
+      setData(name, value); // Update the form data as well
+    }
+  };
+
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    post(route("risk.assetsstore"), {
+      preserveScroll: true,
+      onSuccess: () => {
+        reset();
+        handleClose();
+      },
+      data: {
+        ...data,
+        assetid: asset.id,
+        assetimpact: largest,
+      },
+    });
+    console.log(data);
+    console.log(largest);
+  };
+
+  return (
+    <React.Fragment>
+      <Offcanvas
+        show={show}
+        onHide={handleClose}
+        placement="end"
+        id="offcanvasRight"
+      >
+        <Offcanvas.Header className="border-bottom" closeButton>
+          <Offcanvas.Title id="offcanvasExampleLabel">
+            Risk Register
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <Card>
+            <CardHeader>Assets Details</CardHeader>
+            <Card.Body>
+              <Row className="pb-2">
+                <Col md={6}>
+                  <div className="form-group">
+                    <label>Assets Name:</label>
+                    <p className="form-control">{asset.name}</p>
+                  </div>
+                </Col>
+                {asset.category && (
+                  <Col md={6}>
+                    <div className="form-group">
+                      <label>Assets Category:</label>
+                      <p className="form-control">{asset.category.name}</p>
+                    </div>
+                  </Col>
+                )}
+                <Col md={6}>
+                  <div className="form-group">
+                    <label>Assets Boarding Date:</label>
+                    <p className="form-control">{asset.boardingdate}</p>
+                  </div>
+                </Col>
+                <Col md={6}>
+                  <div className="form-group">
+                    <label>Assets Retirement Date:</label>
+                    <p className="form-control">{asset.retirementdate}</p>
+                  </div>
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
+          <Card>
+            <CardHeader>Risk Register</CardHeader>
+            <CardBody>
+              <form onSubmit={onSubmit}>
+                <Row>
+                  <Col md={6}>
+                    <Form.Label htmlFor="isunderrisk" className="form-label">
+                      Is Under Risk Register?{" "}
+                      <span className="text-danger ms-1">*</span>
+                    </Form.Label>
+                    <select
+                      className="form-control form-select"
+                      onChange={(e) => setData("isunderrisk", e.target.value)}
+                      name="isunderrisk"
+                      required
+                    >
+                      <option></option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Label htmlFor="risk" className="form-label">
+                      Apply Risk <span className="text-danger ms-1">*</span>
+                    </Form.Label>
+                    <select
+                      className="form-control form-select"
+                      multiple
+                      onChange={handleChange}
+                      name="risk"
+                      required
+                    >
+                      <option></option>
+                      {risks.map((risk) => (
+                        <option key={risk.id} value={risk.id}>
+                          {risk.name}
+                        </option>
+                      ))}
+                    </select>
+                  </Col>
+                  <Col md={12}>
+                    <Row>
+                      <Col md={12}>
+                        <Row>
+                          <Col md={4}>
+                            <Form.Label htmlFor="c" className="form-label">
+                              Confidentiality Value{" "}
+                              <span className="text-danger ms-1">*</span>
+                            </Form.Label>
+                            <select
+                              className="form-control form-select"
+                              onChange={handleChange}
+                              name="c"
+                              required
+                            >
+                              <option value="0">0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                            </select>
+                          </Col>
+                          <Col md={4}>
+                            <Form.Label htmlFor="i" className="form-label">
+                              Integrity Value{" "}
+                              <span className="text-danger ms-1">*</span>
+                            </Form.Label>
+                            <select
+                              className="form-control form-select"
+                              onChange={handleChange}
+                              name="i"
+                              required
+                            >
+                              <option value="0">0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                            </select>
+                          </Col>
+                          <Col md={4}>
+                            <Form.Label htmlFor="a" className="form-label">
+                              Availability Value{" "}
+                              <span className="text-danger ms-1">*</span>
+                            </Form.Label>
+                            <select
+                              className="form-control form-select"
+                              onChange={handleChange}
+                              name="a"
+                              required
+                            >
+                              <option value="0">0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                            </select>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Label htmlFor="assetvalue" className="form-label">
+                      Assets Value (Impact){" "}
+                      <span className="text-danger ms-1">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      name="assetvalue"
+                      placeholder="0"
+                      autoFocus
+                      className={
+                        "form-control" +
+                        (errors.assetvalue ? " is-invalid" : "")
+                      }
+                      id="largest"
+                      value={largest}
+                      readOnly
+                    />
+                    <Form.Control.Feedback
+                      type="invalid"
+                      className="mt-2 d-block"
+                    >
+                      {errors.assetvalue}
+                    </Form.Control.Feedback>
+                  </Col>
+                </Row>
+                <Row className="justify-content-md-center">
+                  <Col xl={2} md={6}>
+                    <Button
+                      onClick={handleClose}
+                      className="btn btn-light w-100"
+                    >
+                      Cancel
+                    </Button>
+                  </Col>
+                  <Col xl={2} md={6}>
+                    <Button
+                      type="submit"
+                      className="btn btn-primary w-100"
+                      disabled={processing}
+                    >
+                      Submit
+                    </Button>
+                  </Col>
+                </Row>
+              </form>
+            </CardBody>
+          </Card>
+        </Offcanvas.Body>
+      </Offcanvas>
+    </React.Fragment>
+  );
+}

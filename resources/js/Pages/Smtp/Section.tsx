@@ -1,0 +1,36 @@
+
+import React, { useState } from "react";
+import { Col, Row, Button, CardBody, Card } from "react-bootstrap";
+
+const Section = ({users, departments}:any) => {
+
+  const [show, setShow] = useState<boolean>(false);
+  const [isBottom, setIsBottom] = useState<boolean>(false);
+  const handleAddMenuClick = () => {
+    setShow(true);
+    setIsBottom(!isBottom);
+
+  };
+
+  return (
+    <React.Fragment>
+      <Row className="mb-3 pb-1">
+        <Col xs={12}>
+          <div className="d-flex align-items-lg-center flex-lg-row flex-column">
+            <div className="flex-grow-1">
+              <h4 className="fs-16 mb-1">SMTP Details  </h4>
+            </div>
+            <div className="md-12 mt-lg-0">
+
+             
+            </div>
+          </div>
+        </Col>
+      </Row>
+      
+
+    </React.Fragment>
+  );
+};
+
+export default Section;
