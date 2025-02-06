@@ -372,7 +372,7 @@ const NavdataAdmin = () => {
       id: "dashboard",
       label: "Dashboards",
       icon: "ri-dashboard-2-line",
-      link: "/#",
+      link: "/",
       stateVariables: isDashboard,
       click: function (e: any) {
         e.preventDefault();

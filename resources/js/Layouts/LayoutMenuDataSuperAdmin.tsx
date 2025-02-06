@@ -96,12 +96,13 @@ const NavdataAdmin = () => {
     {
       id: "admindashboard",
       label: "Dashboard",
-      icon: " ri-dashboard-line",
+      icon: "ri-home-line",
       link: "/#",
     },
     {
       id: "user_management",
       label: "Users",
+      link: route("user.menu"),
       icon: "ri-account-circle-line",
       click: function (e: any) {
         e.preventDefault();
@@ -110,49 +111,55 @@ const NavdataAdmin = () => {
         updateIconSidebar(e);
       },
       stateVariables: isUserManagement,
-      subItems: [
+      // subItems: [
 
-        {
-          id: "userlist",
-          label: "List",
-          link: route("user.index"),
-          parentId: "user_management",
-        },
-        {
-          id: "role",
-          label: "Role",
-          link: "/role",
-          parentId: "user_management",
-        },
+      //   {
+      //     id: "userlist",
+      //     label: "List",
+      //     link: route("user.index"),
+      //     parentId: "user_management",
+      //   },
+      //   {
+      //     id: "role",
+      //     label: "Role",
+      //     link: "/role",
+      //     parentId: "user_management",
+      //   },
 
-        {
-          id: "permission",
-          label: "Permissions",
-          link: "/permission",
-          parentId: "users",
-        },
+      //   {
+      //     id: "permission",
+      //     label: "Permissions",
+      //     link: "/permission",
+      //     parentId: "users",
+      //   },
 
 
 
-        {
-          id: "designation",
-          label: "Designation",
-          link: route("designation.index"),
-          parentId: "user_management",
-        },
-        {
-          id: "department",
-          label: "Department",
-          link: route("department.index"),
-          parentId: "user_management",
-        },
-      ],
+      //   {
+      //     id: "designation",
+      //     label: "Designation",
+      //     link: route("designation.index"),
+      //     parentId: "user_management",
+      //   },
+      //   {
+      //     id: "department",
+      //     label: "Department",
+      //     link: route("department.index"),
+      //     parentId: "user_management",
+      //   },
+      //   {
+      //     id: "demo",
+      //     label: "Demo",
+      //     link: route("user.menu"),
+      //     parentId: "user_management",
+      //   },
+      // ],
     },
 
     {
       id: "packagemangement",
       label: "Package",
-      icon: "ri-vip-diamond-fill",
+      icon: "ri-box-3-fill",
       link: route("sasspackage.index"),
       stateVariables: isSassPackage,
       click: function (e: any) {
@@ -164,7 +171,7 @@ const NavdataAdmin = () => {
     {
       id: "offersmangement",
       label: "Offers",
-      icon: "ri-coin-line",
+      icon: "ri-price-tag-3-line",
       link: route("offers.index"),
       stateVariables: isOffers,
       click: function (e: any) {
@@ -189,7 +196,7 @@ const NavdataAdmin = () => {
     {
       id: "framworkprice",
       label: "Framwork Price",
-      icon: "ri-home-gear-line",
+      icon: "ri-price-tag-3-fill",
       link: route("framworkprice.index"),
       stateVariables: isFramworkPrice,
       click: function (e: any) {
@@ -202,7 +209,7 @@ const NavdataAdmin = () => {
     {
       id: "partner_management",
       label: "Partner's",
-      icon: "ri-store-line",
+      icon: "ri-team-fill",
       link: route("partner.index"),
       stateVariables: isPartnerManagement,
       click: function (e: any) {
@@ -215,7 +222,7 @@ const NavdataAdmin = () => {
     {
       id: "master_setting",
       label: "Master Setting",
-      icon: "ri-briefcase-fill",
+      icon: "ri-settings-line",
       link: route("mastersetting.index"),
       stateVariables: isMasterSetting,
       click: function (e: any) {
@@ -238,7 +245,7 @@ const NavdataAdmin = () => {
     {
       id: "billing",
       label: "Billing",
-      icon: "ri-money-dollar-circle-line",
+      icon: "ri-bank-card-line",
       link: route("billing.menu"),
       stateVariables: isBilling,
       click: function (e: any) {
@@ -267,6 +274,7 @@ const NavdataAdmin = () => {
       id: "client",
       label: "Organization",
       icon: "ri-building-2-line",
+      link: route("organization.menu"),
       click: function (e: any) {
         e.preventDefault();
         setIsClient(!isClient);
@@ -274,60 +282,67 @@ const NavdataAdmin = () => {
         updateIconSidebar(e);
       },
       stateVariables: isClient,
-      subItems: [
-        {
-          id: "organization",
-          label: "Organization",
-          link: route("organization.index"),
-          parentId: "clients",
-        },
-        {
-          id: "entity",
-          label: "Entity",
-          link: route("entity.index"),
-          parentId: "entity",
-        },
-      ],
+      // subItems: [
+      //   {
+      //     id: "organization",
+      //     label: "Organization",
+      //     link: route("organization.index"),
+      //     parentId: "clients",
+      //   },
+      //   {
+      //     id: "entity",
+      //     label: "Entity",
+      //     link: route("entity.index"),
+      //     parentId: "entity",
+      //   },
+      //   {
+      //     id: "demo",
+      //     label: "Demo",
+      //     link: route("organization.menu"),
+      //     parentId: "entity",
+      //   },
+      // ],
     },
 
 
     {
       id: "faq",
       label: "FAQ",
-      icon: "ri-building-2-line",
-      click: function (e: any) {
-        e.preventDefault();
-        setIsFaq(!isFaq);
-        setIscurrentState("Faqs");
-        updateIconSidebar(e);
-      },
+      icon: "ri-question-line",
+      link: route("faq.menu"),
+      // click: function (e: any) {
+      //   e.preventDefault();
+      //   setIsFaq(!isFaq);
+      //   setIscurrentState("Faqs");
+      //   updateIconSidebar(e);
+      // },
       stateVariables: isFaq,
-      subItems: [
-        {
-          id: "faqcategory",
-          label: "FAQ Category",
-          link: route("faqcategory.index"),
-          parentId: "faq",
-        },
-        {
-          id: "faqsubcategory",
-          label: "FAQ Sub Category",
-          link: route("faqsubcategory.index"),
-          parentId: "faq",
-        },
-        {
-          id: "faqtype",
-          label: "FAQ Type",
-          link: route("faqtype.index"),
-          parentId: "faq",
-        },
-        {
-          id: "faq",
-          label: "FAQ Questions",
-          link: route("faq.index"),
-          parentId: "faq",
-        },
-      ],
+      // subItems: [
+      //   {
+      //     id: "faqcategory",
+      //     label: "FAQ Category",
+      //     link: route("faqcategory.index"),
+      //     parentId: "faq",
+      //   },
+      //   {
+      //     id: "faqsubcategory",
+      //     label: "FAQ Sub Category",
+      //     link: route("faqsubcategory.index"),
+      //     parentId: "faq",
+      //   },
+      //   {
+      //     id: "faqtype",
+      //     label: "FAQ Type",
+      //     link: route("faqtype.index"),
+      //     parentId: "faq",
+      //   },
+      //   {
+      //     id: "faq",
+      //     label: "FAQ Questions",
+      //     link: route("faq.index"),
+      //     parentId: "faq",
+      //   },
+      // ],
     },
 
 

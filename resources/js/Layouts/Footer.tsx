@@ -7,10 +7,10 @@ const Footer = () => {
       <footer className="footer border-top">
         <Container fluid>
           <Row>
-            <Col sm={6}>{new Date().getFullYear()} © TPRM.</Col>
+            <Col sm={6}>{new Date().getFullYear()} © SAAS.</Col>
             <Col sm={6}>
               <div className="text-sm-end d-none d-sm-block">
-                Design & Develop by Third-Party Risk Management (TPRM)
+                Design & Develop by SAAS.
               </div>
             </Col>
           </Row>

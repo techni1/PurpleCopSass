@@ -71,6 +71,17 @@ Route::get('/reset-password/{token}', function (string $token) {
 
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/user/menu', function () {
+        return inertia('User/Menu');
+    })->name('user.menu');
+    Route::get('/organization/menu', function () {
+        return inertia('Organization/Menu');
+    })->name('organization.menu');
+    Route::get('/faq/menu', function () {
+        return inertia('Faq/Menu');
+    })->name('faq.menu');
+
     Route::get('/profile-edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile-destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');

@@ -52,7 +52,7 @@ export default function Register() {
                     <div className="text-center mt-2">
                       <h5 className="text-primary">Create New Account</h5>
                       <p className="text-muted">
-                        Get your free InstaGRC account now
+                        Get your free SAAS account now
                       </p>
                     </div>
                     <div className="p-2 mt-4">
@@ -197,7 +197,7 @@ export default function Register() {
 
                         <div className="mb-4 mt-4">
                           <p className="mb-0 fs-12 text-muted fst-italic">
-                            By registering you agree to the InstaGRC
+                            By registering you agree to the SAAS
                             <Link
                               href="#"
                               className="text-primary text-decoration-underline fst-normal fw-medium ms-2"
