@@ -8,6 +8,7 @@ use App\Http\Resources\PartnerResource;
 use App\Models\Partner;
 use App\Models\PartnerCategory;
 use App\Models\PartnerDocuments;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -53,7 +54,6 @@ class PartnerController extends Controller
      */
     public function store(StorePartnerRequest $request)
     {
-
         $data = $request->validated();
         $logo = $request->file('logo') ?? null;
         if ($logo) {
@@ -61,63 +61,82 @@ class PartnerController extends Controller
         }
 
 
-        $data['address'] = $request->address ? $request->address : '';
+        $data['partner_address'] = $request->partner_address ? $request->partner_address : '';
+        $data['categoryid'] = $request->categoryid ? $request->categoryid : '';
+        $data['bank_accountnumber'] = $request->bank_accountnumber ? $request->bank_accountnumber : '';
+        $data['bank_name'] = $request->bank_name ? $request->bank_name : '';
+        $data['bank_branch'] = $request->bank_branch ? $request->bank_branch : '';
+        $data['bank_ibn'] = $request->bank_ibn ? $request->bank_ibn : '';
+        $data['bank_ifsce'] = $request->bank_ifsce ? $request->bank_ifsce : '';
+        $data['bank_swiftcode'] = $request->bank_swiftcode ? $request->bank_swiftcode : '';
+        $data['bank_address'] = $request->bank_address ? $request->bank_address : '';
         $data['tprm'] = $request->tprm ? $request->tprm : '';
         $data['msme'] = $request->msme ? $request->msme : '';
-        $data['swiftcode'] = $request->swiftcode ? $request->swiftcode : '';
-        $data['ibn_number'] = $request->ibn_number ? $request->ibn_number : '';
-        $data['bank_branch'] = $request->bank_branch ? $request->bank_branch : '';
-        $data['bank_address'] = $request->bank_address ? $request->bank_address : '';
-        $data['payment_released'] = $request->payment_released ? $request->payment_released : '';
+        $data['payment_realsed'] = $request->payment_realsed ? $request->payment_realsed : '';
+        $data['partner_status'] = $request->partners_status ? $request->partners_status : '';
+        $data['commission_rate'] = $request->commission_rate ? $request->commission_rate : '';
         $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
 
 
-        // $partnerAdd = Partner::create($data);
-        echo '<pre>';
-        print_R($request->file());
-        exit;
+        $partnerAdd = Partner::create($data);
 
 
         $indata = array();
         // add document in parnter id 
 
-        $gst_vat_document = $data['gst_vat_document'] ?? null;
+        $gst_vat_document = $request->file('gst_vat_document') ?? null;
 
         if ($gst_vat_document) {
 
             $indata[1]['document_name'] = 'gst_vat_document';
-            $indata[1]['doucment'] = $gst_vat_document->store('partner/vat/' . Str::random(), 'public');
+            $indata[1]['doucment'] =  $gst_vat_document->store('partner/vat/' . Str::random(), 'public');
         }
 
-        $cancel_cheque = $data['cancel_cheque'] ?? null;
+        $cancel_cheque =  $request->file('cancel_cheque') ?? null;
         if ($cancel_cheque) {
             $indata[2]['document_name'] = 'cancel_cheque';
             $indata[2]['document'] = $cancel_cheque->store('partner/cheque/' . Str::random(), 'public');
         }
 
-        $coi_document = $data['coi_document'] ?? null;
+        $coi_document =  $request->file('coi_document') ?? null;
         if ($coi_document) {
             $indata[3]['document_name'] = 'coi_document';
             $indata[3]['document'] = $coi_document->store('partner/coi/' . Str::random(), 'public');
         }
 
-        $pancard_document = $data['pancard_document'] ?? null;
+        $pancard_document =  $request->file('pancard_document') ?? null;
         if ($pancard_document) {
             $indata[4]['document_name'] = 'pancard_document';
             $indata[4]['document'] = $pancard_document->store('partner/pancar/' . Str::random(), 'public');
         }
-        echo '<pre>';
-        print_R($indata);
-        exit;
+
         foreach ($indata as $datain) {
+            if (!empty($datain['doucment'])) {
+                $in['partnerid'] = $partnerAdd->id;
+                $in['document_name'] = $datain['document_name'];
+                $in['document'] = $datain['doucment'];
 
-            $in['partnerid'] = $partnerAdd->id;
-            $in['document_name'] = $datain['document_name'];
-            $in['document'] = $datain['document'];
-
-            PartnerDocuments::create($in);
+                PartnerDocuments::create($in);
+            }
+            //  dd($datain);
         }
+
+        // ALso Add on User table 
+
+        $userData['name'] = $data['legalname'];
+        $userData['email'] = $data['email'];
+
+        $profileImg = $request->file('logo') ?? null;
+        if ($profileImg) {
+            $userData['user_profile_pic'] = $profileImg->store('user/' . Str::random(), 'public');
+        }
+        $userData['password'] = bcrypt($data['phone']);
+        $user = User::create($userData);
+
+        $user->assignRole('Partner');
+        // Send email 
+
     }
 
     /**

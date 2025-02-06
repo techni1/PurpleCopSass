@@ -250,6 +250,17 @@ class AdminDashboardController extends Controller
                     ]
                 );
 
+            case 'Partner':
+                return inertia(
+                    'Dashboard/PartnerDashboard',
+                    [
+                        'fdata' => $facts,
+                        'userLogs' => $userLogs,
+
+                    ]
+                );
+
+
             default:
                 return inertia('Dashboard/SuperAdminDashboard');
         }

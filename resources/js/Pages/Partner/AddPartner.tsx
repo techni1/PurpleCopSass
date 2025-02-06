@@ -22,26 +22,26 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
         phone: "",
         pancard: "",
         legalname: "",
-        category_id: "",
+        categoryid: "",
         partners_status: "",
         second_contactno: "",
-        account_number: "",
+        bank_accountnumber: "",
         bank_name: "",
         bank_branch: "",
         bank_address:"",
-        ifsc_code: "",
+        bank_ifsce: "",
         address: "",
         commission_rate: "",
         logo: null,
-        gst_vat_document: "",
-        cancel_cheque: "",
-        coi_document: "",
-        pancard_document: "",
+        gst_vat_document: null,
+        cancel_cheque: null,
+        coi_document: null,
+        pancard_document: null,
         ibn_number:"",
-        swiftcode: "",
+        bank_swiftcode: "",
         tprm: "",
         msme: "",
-        payment_released: "",
+        payment_realsed: "",
         
     });
 
@@ -105,7 +105,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                 name="name"
 
                                                 value={data.name}
-                                                autoFocus
+                                                
                                                 className={
                                                     "form-control" + (errors.name ? " is-invalid" : "")
                                                 }
@@ -131,7 +131,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                 id="legalname"
                                                 name="legalname"
                                                 value={data.legalname}
-                                                autoFocus
+                                                
                                                 className={
                                                     "form-control" + (errors.legalname ? " is-invalid" : "")
                                                 }
@@ -159,7 +159,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                 name="email"
 
                                                 value={data.email}
-                                                autoFocus
+                                                
                                                 className={
                                                     "form-control" + (errors.email ? " is-invalid" : "")
                                                 }
@@ -187,7 +187,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                 name="phone"
 
                                                 value={data.phone}
-                                                autoFocus
+                                                
                                                 className={
                                                     "form-control" + (errors.phone ? " is-invalid" : "")
                                                 }
@@ -215,7 +215,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                 name="second_contactno"
 
                                                 value={data.second_contactno}
-                                                autoFocus
+                                                
                                                 className={
                                                     "form-control" + (errors.second_contactno ? " is-invalid" : "")
                                                 }
@@ -245,7 +245,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                 id="pancard"
                                                 name="pancard"
                                                 value={data.pancard}
-                                                autoFocus
+                                                
                                                 className={
                                                     "form-control" + (errors.pancard ? " is-invalid" : "")
                                                 }
@@ -270,13 +270,13 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
 
                                             <Form.Select
                                                 className={
-                                                    "form-control form-select" + (errors.category_id ? " is-invalid" : "")
+                                                    "form-control form-select" + (errors.categoryid ? " is-invalid" : "")
                                                 }
-                                                onChange={(e: any) => setData("category_id", e.target.value)}
+                                                onChange={(e: any) => setData("categoryid", e.target.value)}
                                                 required
-
                                             >
                                                 <option value="">Select Category</option>
+                                             
                                                 {pcategory.map((pc: any) => (
                                                     <option key={pc.id} value={pc.id}>
                                                         {pc.name}
@@ -287,7 +287,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                 type="invalid"
                                                 className="mt-2 d-block"
                                             >
-                                                {errors.category_id}
+                                                {errors.categoryid}
                                             </Form.Control.Feedback>
                                         </div>
 
@@ -324,7 +324,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                                 "mt-1 form-control" +
                                                                 (errors.logo ? " is-invalid" : "")
                                                             }
-                                                            onChange={(e: any) => setData("logo", e.target.value)}
+                                                            onChange={(e: any) => setData("logo", e.target.files[0])}
                                                         />
                                                         <Form.Control.Feedback
                                                             type="invalid"
@@ -346,12 +346,10 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                              id="gst_vat_document"
                                                             type="file"
                                                             name="gst_vat_document"
-                                                            value={data.gst_vat_document}
-                                                            autoFocus
                                                             className={
                                                                 "form-control" + (errors.gst_vat_document ? " is-invalid" : "")
                                                             }
-                                                            onChange={(e: any) => setData("gst_vat_document", e.target.value)}
+                                                            onChange={(e: any) => setData("gst_vat_document", e.target.files[0])}
                                                             
                                                         />
                                                         <Form.Control.Feedback
@@ -373,12 +371,10 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                         id="cancel_cheque"
                                                         type="file"
                                                             name="cancel_cheque"
-                                                            value={data.cancel_cheque}
-                                                            autoFocus
                                                             className={
                                                                 "form-control" + (errors.cancel_cheque ? " is-invalid" : "")
                                                             }
-                                                            onChange={(e: any) => setData("cancel_cheque", e.target.value)}
+                                                            onChange={(e: any) => setData("cancel_cheque", e.target.files[0])}
                                                             
                                                         />
                                                         <Form.Control.Feedback
@@ -401,12 +397,11 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                         id="coi_document"
                                                         type="file"
                                                             name="coi_document"
-                                                            value={data.coi_document}
-                                                            autoFocus
+                                                           
                                                             className={
                                                                 "form-control" + (errors.coi_document ? " is-invalid" : "")
                                                             }
-                                                            onChange={(e: any) => setData("coi_document", e.target.value)}
+                                                            onChange={(e: any) => setData("coi_document", e.target.files[0])}
                                                             
                                                         />
                                                         <Form.Control.Feedback
@@ -431,12 +426,11 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                         id="pancard_document"
                                                         type="file"
                                                             name="pancard_document"
-                                                            value={data.pancard_document}
-                                                            autoFocus
+                                                           
                                                             className={
                                                                 "form-control" + (errors.pancard_document ? " is-invalid" : "")
                                                             }
-                                                            onChange={(e: any) => setData("pancard_document", e.target.value)}
+                                                            onChange={(e: any) => setData("pancard_document", e.target.files[0])}
                                                             
                                                         />
                                                         <Form.Control.Feedback
@@ -451,28 +445,28 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
 
                                         <div className="col-md-4 pt-2">
                                             <Form.Label
-                                                htmlFor="account_number"
+                                                htmlFor="bank_accountnumber"
                                                 className="form-label"
                                             >
                                                 Account Number
                                             </Form.Label>
 
                                             <Form.Control
-                                                id="account_number"
-                                                name="account_number"
-                                                value={data.account_number}
-                                                autoFocus
+                                                id="bank_accountnumber"
+                                                name="bank_accountnumber"
+                                                value={data.bank_accountnumber}
+                                                
                                                 className={
-                                                    "form-control" + (errors.account_number ? " is-invalid" : "")
+                                                    "form-control" + (errors.bank_accountnumber ? " is-invalid" : "")
                                                 }
-                                                onChange={(e: any) => setData("account_number", e.target.value)}
+                                                onChange={(e: any) => setData("bank_accountnumber", e.target.value)}
                                                 required
                                             />
                                             <Form.Control.Feedback
                                                 type="invalid"
                                                 className="mt-2 d-block"
                                             >
-                                                {errors.account_number}
+                                                {errors.bank_accountnumber}
                                             </Form.Control.Feedback>
                                         </div>
 
@@ -493,7 +487,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                 id="bank_name"
                                                 name="bank_name"
                                                 value={data.bank_name}
-                                                autoFocus
+                                                
                                                 className={
                                                     "form-control" + (errors.bank_name ? " is-invalid" : "")
                                                 }
@@ -521,7 +515,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                 id="bank_branch"
                                                 name="bank_branch"
                                                 value={data.bank_branch}
-                                                autoFocus
+                                                
                                                 className={
                                                     "form-control" + (errors.bank_branch ? " is-invalid" : "")
                                                 }
@@ -549,7 +543,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                         id="ibn_number"
                                                         name="ibn_number"
                                                         value={data.ibn_number}
-                                                        autoFocus
+                                                        
                                                         className={
                                                             "form-control" + (errors.ibn_number ? " is-invalid" : "")
                                                         }
@@ -566,56 +560,56 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
 
                                                 <div className="col-md-4 pt-2">
                                                     <Form.Label
-                                                        htmlFor="ifsc_code"
+                                                        htmlFor="bank_ifsce"
                                                         className="form-label"
                                                     >
                                                         IFSC Code
                                                     </Form.Label>
 
                                                     <Form.Control
-                                                        id="ifsc_code"
-                                                        name="ifsc_code"
-                                                        value={data.ifsc_code}
-                                                        autoFocus
+                                                        id="bank_ifsce"
+                                                        name="bank_ifsce"
+                                                        value={data.bank_ifsce}
+                                                        
                                                         className={
-                                                            "form-control" + (errors.ifsc_code ? " is-invalid" : "")
+                                                            "form-control" + (errors.bank_ifsce ? " is-invalid" : "")
                                                         }
-                                                        onChange={(e: any) => setData("ifsc_code", e.target.value)}
+                                                        onChange={(e: any) => setData("bank_ifsce", e.target.value)}
                                                         required
                                                     />
                                                     <Form.Control.Feedback
                                                         type="invalid"
                                                         className="mt-2 d-block"
                                                     >
-                                                        {errors.ifsc_code}
+                                                        {errors.bank_ifsce}
                                                     </Form.Control.Feedback>
                                         </div>
                                         
 
                                         <div className="col-md-4 pt-2">
                                                     <Form.Label
-                                                        htmlFor="swiftcode"
+                                                        htmlFor="bank_swiftcode"
                                                         className="form-label"
                                                     >
                                                         Swift Code
                                                     </Form.Label>
 
                                                     <Form.Control
-                                                        id="swiftcode"
-                                                        name="swiftcode"
-                                                        value={data.swiftcode}
-                                                        autoFocus
+                                                        id="bank_swiftcode"
+                                                        name="bank_swiftcode"
+                                                        value={data.bank_swiftcode}
+                                                        
                                                         className={
-                                                            "form-control" + (errors.swiftcode ? " is-invalid" : "")
+                                                            "form-control" + (errors.bank_swiftcode ? " is-invalid" : "")
                                                         }
-                                                        onChange={(e: any) => setData("swiftcode", e.target.value)}
+                                                        onChange={(e: any) => setData("bank_swiftcode", e.target.value)}
                                                         required
                                                     />
                                                     <Form.Control.Feedback
                                                         type="invalid"
                                                         className="mt-2 d-block"
                                                     >
-                                                        {errors.swiftcode}
+                                                        {errors.bank_swiftcode}
                                                     </Form.Control.Feedback>
                                         </div>
                                         <div className="col-md-4 pt-2">
@@ -696,14 +690,14 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
 
                                                 <div className="col-md-4">
                                                     <Form.Label
-                                                        htmlFor="payment_released"
+                                                        htmlFor="payment_realsed"
                                                         className="form-label"
                                                     >
                                                       Payment Relased (In Days)
                                                     </Form.Label>
                                                     <select
                                                         className="form-select"
-                                                        onChange={(e: any) => setData("payment_released", e.target.value)}
+                                                        onChange={(e: any) => setData("payment_realsed", e.target.value)}
                                                     >
                                                         <option></option>
                                                         <option value="30">30 Days</option>
@@ -716,7 +710,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                         type="invalid"
                                                         className="mt-2 d-block"
                                                     >
-                                                        {errors.payment_released}
+                                                        {errors.payment_realsed}
                                                     </Form.Control.Feedback>
                                                 </div>
                                                 
@@ -767,7 +761,7 @@ export default function AddPartner({ show, setShow, pcategory }: any) {
                                                             id="commission_rate"
                                                             name="commission_rate"
                                                             value={data.commission_rate}
-                                                            autoFocus
+                                                            
                                                             className={
                                                                 "form-control" + (errors.commission_rate ? " is-invalid" : "")
                                                             }

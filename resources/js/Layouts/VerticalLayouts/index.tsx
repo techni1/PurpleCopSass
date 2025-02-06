@@ -3,28 +3,22 @@ import PropTypes from "prop-types";
 import { Collapse, Dropdown } from "react-bootstrap";
 // Import Data
 import navdataSuperAdmin from "../LayoutMenuDataSuperAdmin";
-import navdataAdmin from "../LayoutMenuDataAdmin";
-import navdataAssignee from "../LayoutMenuDataAssignee";
-import navdataSecurityofficer from "../LayoutMenuDataSecurityofficer";
-import navdataApprover from "../LayoutMenuDataApprover";
-import navdataAuditor from "../LayoutMenuDataAuditor";
+
 import navdataExternalAuditor from "../LayoutMenuDataExternalAuditor";
 
+import NavdataPartner from "../LayoutMenuDataPartner";
 //i18n
 import { withTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { Link, usePage } from "@inertiajs/react";
 
+
 const VerticalLayout = (props: any) => {
   const userRoles = usePage().props.auth.roles;
   const navDataSuperAdmin = navdataSuperAdmin().props.children;
-  const navDataAdmin = navdataAdmin().props.children;
-  const navDataAssignee = navdataAssignee().props.children;
-  const navDataSecurityofficer = navdataSecurityofficer().props.children;
-  const navDataApprover = navdataApprover().props.children;
-  const navDataAuditor = navdataAuditor().props.children;
   const navDataExternalAuditor = navdataExternalAuditor().props.children;
+  const navdataPartner = NavdataPartner().props.children;
   const path = window.location.pathname;
 
   /*
@@ -193,16 +187,8 @@ const VerticalLayout = (props: any) => {
       {/* menu Items */}
       {(userRoles == "Super-Admin"
         ? navDataSuperAdmin
-        : userRoles == "Admin"
-        ? navDataAdmin
-        : userRoles == "Assignee"
-        ? navDataAssignee
-        : userRoles == "Security Officer"
-        ? navDataSecurityofficer
-        : userRoles == "Approver"
-        ? navDataApprover
-        : userRoles == "Auditor"
-        ? navDataAuditor
+        : userRoles == "Partner"
+        ? navdataPartner
         : userRoles == "ExternalAuditor"
         ? navDataExternalAuditor
         : []

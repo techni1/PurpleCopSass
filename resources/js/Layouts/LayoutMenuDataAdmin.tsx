@@ -3,7 +3,7 @@ import { usePage } from "@inertiajs/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const NavdataOrganization = () => {
+const NavdataAdmin = () => {
   //state data
   // const userRoles = usePage().props.auth.roles;
 
@@ -347,4 +347,4 @@ const NavdataOrganization = () => {
   ];
   return <React.Fragment>{menuItems}</React.Fragment>;
 };
-export default NavdataOrganization;
+export default NavdataAdmin;
