@@ -30,7 +30,6 @@ return new class extends Migration
             $table->enum('billing_type', ['One Time', 'Recurring', 'Custom'])->default('One Time');
             $table->enum('billing_cycle', ['Monthly', 'Quarterly', 'Half Yearly', 'Yearly'])->default('Monthly');
             $table->enum('billing_status', ['quotation', 'billing'])->default('quotation');
-
             $table->decimal('discount_amt', 8, 2)->default('0.00');
             $table->decimal('final_amount', 8, 2)->default('0.00');
             $table->foreignId('bank_deatils')->nullable()->constrained('master_settings', 'id')->nullOnDelete();
@@ -39,7 +38,7 @@ return new class extends Migration
             $table->mediumText('notes')->nullable();
             $table->string('reason_for_calcellation')->nullable();
             $table->mediumText('reson_notes')->nullable();
-            $table->foreignId('cancel_by')->constrained('users', 'id');
+            $table->tinyInteger('iscreate_partner')->default(0);
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->foreignId('updated_by')->nullable()->constrained('users', 'id');
             $table->timestamps();

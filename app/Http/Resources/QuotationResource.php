@@ -8,6 +8,7 @@ use App\Models\FramworkPrice;
 use App\Models\Offers;
 use App\Models\Organization;
 use App\Models\Sasspackage;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -38,6 +39,11 @@ class QuotationResource extends JsonResource
         }
         $itemdesc = json_encode($itemdata);
 
+
+        $createdBy =  User::userName($this->created_by);
+
+        $createdName = $createdBy->username;
+
         return [
             'id' => $this->id,
             'organization_id' => Organization::getOrganizationDetails($this->organization_id),
@@ -65,9 +71,8 @@ class QuotationResource extends JsonResource
             'reson_notes' => $this->reson_notes,
             'next_billingdate' => $this->next_billingdate,
             'billing_status' => $this->billing_status,
-            'cancel_by' => $this->cancel_by,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
+            'created_by' => $createdName,
+            'updated_by' => User::userName($this->updated_by),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

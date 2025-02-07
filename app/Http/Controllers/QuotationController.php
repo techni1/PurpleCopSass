@@ -38,7 +38,14 @@ class QuotationController extends Controller
      */
     public function index()
     {
-        $quotiaon = Quotation::latest()->get();
+
+        if (auth()->user()->hasRole('Partner')) {
+            $quotiaon = Quotation::where('created_by', Auth::id())->latest()->get();
+        } else {
+            $quotiaon = Quotation::latest()->get();
+        }
+
+
         // organization 
         $organization = Organization::all();
         // entity
@@ -142,6 +149,10 @@ class QuotationController extends Controller
         $data['billing_status'] = 'quotation';
         $data['quotation_by'] =  Auth::id();
         $data['quotation_date'] = date('Y-m-d h:i:s');
+        if (auth()->user()->hasRole('Partner')) {
+            $data['iscreate_partner'] = '1';
+        }
+
         $data['created_by'] =  Auth::id();
 
         try {

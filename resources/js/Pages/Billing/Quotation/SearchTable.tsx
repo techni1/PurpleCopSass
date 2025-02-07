@@ -90,6 +90,12 @@ const SearchTable = ({ tableData, index = 0, mastersetting, organization, entity
       },
 
       {
+        header: "Added By",
+        accessorKey: "created_by",
+        enableColumnFilter: false,
+      },
+
+      {
         header: "Actions",
         id: "actions",
         cell: (info: any) => (

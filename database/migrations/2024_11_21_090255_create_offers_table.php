@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('percentage', 2, 2);
+            $table->decimal('percentage', 8, 2)->default('0.00');
             $table->date('offer_startdate')->nullable();
             $table->date('offer_enddate')->nullable();
             $table->enum('offer_status', ['1', '0'])->default('0');

@@ -15,14 +15,14 @@ export default function Index({ organizations, success }: any) {
 
   const [userOrg, setUserOrg] = useState<any>(null);
 
-  useEffect(() => {
-    if (userRole[0] !== "Super-Admin" && user) {
-      const foundOrg = organizations.data.find(
-        (item: any) => item.id === user.organization_id
-      );
-      setUserOrg(foundOrg);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if ((userRole[0] !== "Super-Admin" || userRole[0] !== "Partner" ) && user) {
+  //     const foundOrg = organizations.data.find(
+  //       (item: any) => item.id === user.organization_id
+  //     );
+  //     setUserOrg(foundOrg);
+  //   }
+  // }, []);
 
   return (
     <React.Fragment>
@@ -30,7 +30,7 @@ export default function Index({ organizations, success }: any) {
       <div className="page-content">
         <Container fluid>
           <BreadCrumb title="Organizations" pageTitle="Dashboard" />
-          {userRole[0] == "Super-Admin" && (
+          {/* {userRole[0] == "Super-Admin" && (
             <Row>
               <Col>
                 <div className="h-100">
@@ -38,7 +38,7 @@ export default function Index({ organizations, success }: any) {
                 </div>
               </Col>
             </Row>
-          )}
+          )} */}
           {success && (
             <Row>
               <Col>
@@ -55,9 +55,9 @@ export default function Index({ organizations, success }: any) {
             </Row>
           )}
           <Row>
-            {/* <pre>{JSON.stringify(userOrg, undefined, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(organizations, undefined, 2)}</pre> */}
             <Col lg={12}>
-              {userRole[0] == "Super-Admin" ? (
+             
                 <Card>
                   <Card.Body>
                     <SearchTable
@@ -66,9 +66,7 @@ export default function Index({ organizations, success }: any) {
                     />
                   </Card.Body>
                 </Card>
-              ) : (
-                <ShowOrganization organization={userOrg} />
-              )}
+            
             </Col>
           </Row>
         </Container>

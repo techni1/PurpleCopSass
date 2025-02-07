@@ -31,6 +31,8 @@ class OrganizationController extends Controller
     public function index()
     {
         $organizations = Organization::with(['createdBy', 'updatedBy'])->get();
+
+
         return inertia('Organization/Index', [
             'organizations' => OrganizationResource::collection($organizations),
             'success' => session("success"),

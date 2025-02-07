@@ -39,7 +39,7 @@ class Quotation extends Model
         'billing_type',
         'billing_cycle',
         'billing_status',
-        'cancel_by',
+        'iscreate_partner',
         'created_by',
         'updated_by'
     ];

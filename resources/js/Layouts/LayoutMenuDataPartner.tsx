@@ -80,9 +80,9 @@ const NavdataPartner = () => {
 
     {
       id: "billing",
-      label: "Billing",
+      label: "Quotation",
       icon: "ri-money-dollar-circle-line",
-      link: route("billing.menu"),
+      link: route("quotation.index"),
       stateVariables: isBilling,
       click: function (e: any) {
         setIsBilling(!isBilling);

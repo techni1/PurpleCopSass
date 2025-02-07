@@ -26,13 +26,13 @@ export default function AddPackage({ show, setShow }: any) {
         no_of_integration: "",
         no_of_user: "",
         grace_period_day: "",
-        assigned_personal_manager: "",
-        db_backup: "",
-        notification_email: "",
-        notification_sms: "",
-        notification_call: "",
+        assigned_personal_manager: 0,
+        db_backup: 0,
+        notification_email: 0,
+        notification_sms: 0,
+        notification_call: 0,
         server_type: "",
-        custom_featured_request: "",
+        custom_featured_request: 0,
         package_amount: ""
     });
 
@@ -305,91 +305,201 @@ export default function AddPackage({ show, setShow }: any) {
                                         </div>
 
                                         <div className="col-md-4 pt-4">
-
-
-                                            <label htmlFor="assigned_personal_manager" className="form-check-label form-check-label" >Assigned Personal Manager</label>
-                                            &nbsp;
-                                            <input
-                                                type="checkbox"
-                                                id="assigned_personal_manager"
-                                                className="form-check-input pl-2"
-                                                value="1"
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                                    setData("assigned_personal_manager", e.target.checked)
-                                                }
-                                            />
-                                        </div>
-                                        <div className="col-md-4 pt-4">
-
-
-                                            <label htmlFor="notification_email" className="form-check-label form-check-label" >Notification Email</label>
-                                            &nbsp;
-                                            <input
-                                                type="checkbox"
-                                                id="notification_email"
-                                                className="form-check-input pl-2"
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                                    setData("notification_email", e.target.checked)
-                                                }
-                                            />
-                                        </div>
-
-                                        <div className="col-md-4 pt-4">
-
-
-                                            <label htmlFor="notification_sms" className="form-check-label form-check-label" >Notification SMS</label>
-                                            &nbsp;
-                                            <input
-                                                type="checkbox"
-                                                id="notification_sms"
-                                                className="form-check-input pl-2"
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                                    setData("notification_sms", e.target.checked)
-                                                }
-                                            />
-                                        </div>
-
-
-                                        <div className="col-md-4 pt-4">
-
-
-                                            <label htmlFor="notification_call" className="form-check-label form-check-label" >Notification Call</label>
-                                            &nbsp;
-                                            <input
-                                                type="checkbox"
-                                                id="notification_call"
-                                                className="form-check-input pl-2"
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                                    setData("notification_call", e.target.checked)
-                                                }
-                                            />
-                                        </div>
-                                        <div className="col-md-4 pt-4">
-
-
-                                            <label htmlFor="custom_featured_request" className="form-check-label form-check-label" >Custom Featured Request</label>
-                                            &nbsp;
-                                            <input
-                                                type="checkbox"
-                                                id="custom_featured_request"
-                                                className="form-check-input pl-2"
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                                    setData("custom_featured_request", e.target.checked)
-                                                } />
+                                            <label htmlFor="assigned_personal_manager" className="form-check-label">
+                                                Assigned Personal Manager
+                                            </label>
+                                            <div>
+                                                <input
+                                                    type="radio"
+                                                    id="assigned_personal_manager_yes"
+                                                    name="assigned_personal_manager"
+                                                    value="1"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("assigned_personal_manager", 1)}
+                                                    checked={data.assigned_personal_manager === 1}
+                                                />
+                                                <label htmlFor="assigned_personal_manager_yes" className="form-check-label">
+                                                    Yes
+                                                </label>
+                                                &nbsp;
+                                                <input
+                                                    type="radio"
+                                                    id="assigned_personal_manager_no"
+                                                    name="assigned_personal_manager"
+                                                    value="0"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("assigned_personal_manager", 0)}
+                                                    checked={data.assigned_personal_manager === 0}
+                                                />
+                                                <label htmlFor="assigned_personal_manager_no" className="form-check-label">
+                                                    No
+                                                </label>
+                                            </div>
                                         </div>
 
                                         <div className="col-md-4 pt-4">
+                                            <label htmlFor="notification_email" className="form-check-label">
+                                                Notification Email
+                                            </label>
+                                            <div>
+                                                <input
+                                                    type="radio"
+                                                    id="notification_email_yes"
+                                                    name="notification_email"
+                                                    value="1"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("notification_email", 1)}
+                                                    checked={data.notification_email === 1}
+                                                />
+                                                <label htmlFor="notification_email_yes" className="form-check-label">
+                                                    Yes
+                                                </label>
+                                                &nbsp;
+                                                <input
+                                                    type="radio"
+                                                    id="notification_email_no"
+                                                    name="notification_email"
+                                                    value="0"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("notification_email", 0)}
+                                                    checked={data.notification_email === 0}
+                                                />
+                                                <label htmlFor="notification_email_no" className="form-check-label">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
 
+                                        <div className="col-md-4 pt-4">
+                                            <label htmlFor="notification_sms" className="form-check-label">
+                                                Notification SMS
+                                            </label>
+                                            <div>
+                                                <input
+                                                    type="radio"
+                                                    id="notification_sms_yes"
+                                                    name="notification_sms"
+                                                    value="1"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("notification_sms", 1)}
+                                                    checked={data.notification_sms === 1}
+                                                />
+                                                <label htmlFor="notification_sms_yes" className="form-check-label">
+                                                    Yes
+                                                </label>
+                                                &nbsp;
+                                                <input
+                                                    type="radio"
+                                                    id="notification_sms_no"
+                                                    name="notification_sms"
+                                                    value="0"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("notification_sms", 0)}
+                                                    checked={data.notification_sms === 0}
+                                                />
+                                                <label htmlFor="notification_sms_no" className="form-check-label">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
 
-                                            <label htmlFor="db_backup" className="form-check-label form-check-label" >DB Backup</label>
-                                            &nbsp;
-                                            <input
-                                                type="checkbox"
-                                                id="db_backup"
-                                                className="form-check-input pl-2"
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                                    setData("db_backup", e.target.checked)
-                                                } />
+                                        <div className="col-md-4 pt-4">
+                                            <label htmlFor="notification_call" className="form-check-label">
+                                                Notification Call
+                                            </label>
+                                            <div>
+                                                <input
+                                                    type="radio"
+                                                    id="notification_call_yes"
+                                                    name="notification_call"
+                                                    value="1"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("notification_call", 1)}
+                                                    checked={data.notification_call === 1}
+                                                />
+                                                <label htmlFor="notification_call_yes" className="form-check-label">
+                                                    Yes
+                                                </label>
+                                                &nbsp;
+                                                <input
+                                                    type="radio"
+                                                    id="notification_call_no"
+                                                    name="notification_call"
+                                                    value="0"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("notification_call", 0)}
+                                                    checked={data.notification_call === 0}
+                                                />
+                                                <label htmlFor="notification_call_no" className="form-check-label">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-4 pt-4">
+                                            <label htmlFor="custom_featured_request" className="form-check-label">
+                                                Custom Featured Request
+                                            </label>
+                                            <div>
+                                                <input
+                                                    type="radio"
+                                                    id="custom_featured_request_yes"
+                                                    name="custom_featured_request"
+                                                    value="1"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("custom_featured_request", 1)}
+                                                    checked={data.custom_featured_request === 1}
+                                                />
+                                                <label htmlFor="custom_featured_request_yes" className="form-check-label">
+                                                    Yes
+                                                </label>
+                                                &nbsp;
+                                                <input
+                                                    type="radio"
+                                                    id="custom_featured_request_no"
+                                                    name="custom_featured_request"
+                                                    value="0"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("custom_featured_request", 0)}
+                                                    checked={data.custom_featured_request === 0}
+                                                />
+                                                <label htmlFor="custom_featured_request_no" className="form-check-label">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-4 pt-4">
+                                            <label htmlFor="db_backup" className="form-check-label">
+                                                DB Backup
+                                            </label>
+                                            <div>
+                                                <input
+                                                    type="radio"
+                                                    id="db_backup_yes"
+                                                    name="db_backup"
+                                                    value="1"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("db_backup", 1)}
+                                                    checked={data.db_backup === 1}
+                                                />
+                                                <label htmlFor="db_backup_yes" className="form-check-label">
+                                                    Yes
+                                                </label>
+                                                &nbsp;
+                                                <input
+                                                    type="radio"
+                                                    id="db_backup_no"
+                                                    name="db_backup"
+                                                    value="0"
+                                                    className="form-check-input"
+                                                    onChange={() => setData("db_backup", 0)}
+                                                    checked={data.db_backup === 0}
+                                                />
+                                                <label htmlFor="db_backup_no" className="form-check-label">
+                                                    No
+                                                </label>
+                                            </div>
                                         </div>
 
 
