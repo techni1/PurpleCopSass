@@ -15,6 +15,7 @@ use App\Models\Offers;
 use App\Models\Organization;
 use App\Models\Quotation;
 use App\Models\Sasspackage;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,7 @@ class QuotationController extends Controller
 
 
         // organization 
-        $organization = Organization::all();
+        $organization = Organization::where('status', '1')->get();
         // entity
         $entity = Entity::all();
         //package
@@ -166,13 +167,66 @@ class QuotationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Billing $billing)
+    public function show(Quotation $quotation)
     {
+        $billingJson = json_decode($quotation->item_desc);
 
 
-        echo "<pre>";
-        print_R($billing);
-        exit;
+        $itemdata = array();
+
+        foreach ($billingJson as $billingItems) {
+            $itemdata[] = array(
+                'framwork' => FramworkPrice::getFramworkName(1),
+                'unitPrice' => $billingItems->unitPrice,
+                'qty' => $billingItems->qty,
+                'hsn' => $billingItems->hsn,
+                'singleAmt' => $billingItems->singleAmt,
+            );
+        }
+
+        $organizationDetails = $quotation->organization_id ? Organization::getOrganizationDetails($quotation->organization_id) : '';
+        $entityDetails = $quotation->entity_id ? Entity::getEntity($quotation->entity_id) : '';
+        $packageDetails = $quotation->package_id ? Sasspackage::sasspackageName($quotation->package_id) : '';
+        $offerDetails = $quotation->offer_id ? Offers::offersName($quotation->offer_id) : '';
+        $bankDetails = $quotation->bank_deatils ? BankDetails::bankDetails($quotation->bank_deatils) : '';
+
+        $showData =  [
+            'id' => $quotation->id,
+            'organization_id' => $organizationDetails,
+            'entity_id' => $entityDetails,
+            'package_id' => $packageDetails,
+            'offer_id' => $offerDetails,
+            'invoce_no' => $quotation->invoce_no,
+            'invoice_date' => $quotation->invoice_date,
+            'invoice_due_date' => $quotation->invoice_due_date,
+            'ponumber' => $quotation->ponumber,
+            'payment_term' => $quotation->payment_term,
+            'item_desc' => $itemdata,
+            'subtotal' => $quotation->subtotal,
+            'tax' => $quotation->tax,
+            'taxable_total' => $quotation->taxable_total,
+            'hsn' => $quotation->hsn,
+            'discount_amt' => $quotation->discount_amt,
+            'billingAmount' => $quotation->billingAmount,
+            'bank_deatils' => $bankDetails,
+            'term_id' => $quotation->term_id,
+            'notes' => $quotation->notes,
+            'bank' => $quotation->bank,
+            'terms' => $quotation->terms,
+            'reason_for_calcellation' => $quotation->reason_for_calcellation,
+            'reson_notes' => $quotation->reson_notes,
+            'next_billingdate' => $quotation->next_billingdate,
+            'billing_status' => $quotation->billing_status,
+            'created_by' => User::userName($quotation->created_by),
+            'updated_by' => User::userName($quotation->updated_by),
+            'created_at' => Carbon::parse($quotation->created_at)->format('Y-m-d h:i:s'),
+            'updated_at' => Carbon::parse($quotation->updated_at)->format('Y-m-d h:i:s')
+        ];
+
+        return inertia("Billing/Quotation/Show", [
+            'billing' => $showData,
+            'success' => session("success"),
+        ]);
     }
 
     /**

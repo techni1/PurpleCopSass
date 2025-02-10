@@ -165,6 +165,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/billing.quotationstore', [BillingController::class, 'quotationstore'])->name('billing.quotationstore');
     Route::post('/billing.paymentstatus', [BillingController::class, 'paymentstatus'])->name('billing.paymentstatus');
 
+    Route::post('/update-status', [BillingController::class, 'updateStatus'])->name('update-status');
 
     // Route::middleware('api')->group(function () {
     //     Route::post('/billing-accountcheck', [BillingController::class, 'accountcheck']);

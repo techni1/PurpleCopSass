@@ -26,6 +26,8 @@ class Organization extends Model
         'logo_path',
         'created_by',
         'updated_by',
+        'iscreate_partner',
+        'partner_id',
     ];
     public function getActivitylogOptions(): LogOptions
     {

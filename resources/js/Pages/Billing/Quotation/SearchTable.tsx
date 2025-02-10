@@ -88,7 +88,7 @@ const SearchTable = ({ tableData, index = 0, mastersetting, organization, entity
         accessorKey: "billing_status",
         enableColumnFilter: false,
       },
-
+      
       {
         header: "Added By",
         accessorKey: "created_by",

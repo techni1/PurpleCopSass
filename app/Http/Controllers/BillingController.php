@@ -12,6 +12,7 @@ use App\Models\MasterSetting;
 use App\Models\Offers;
 use App\Models\Organization;
 use App\Models\Sasspackage;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,7 @@ class BillingController extends Controller
     {
         $billingdata = Billing::where('billing_status', '!=', 'quotation')->latest()->get();
         // organization 
-        $organization = Organization::all();
+        $organization = Organization::where('status', '1')->get();
         // entity
         $entity = Entity::all();
         //package
@@ -49,6 +50,9 @@ class BillingController extends Controller
         $mastersetting = MasterSetting::all();
         $bank = BankDetails::all();
 
+        $partner_user = User::role('Partner')->get();
+
+
         return inertia("Billing/Index", [
             'billing' => BillingResource::collection($billingdata),
             'organization' => $organization,
@@ -58,6 +62,7 @@ class BillingController extends Controller
             'offers' => $offers,
             'framwork' => $framwork,
             'mastersetting' => $mastersetting,
+            'partneruser' => $partner_user,
             'success' => session("success"),
         ]);
     }
@@ -139,6 +144,7 @@ class BillingController extends Controller
         $data['billing_status'] = 'New';
         $data['created_by'] =  Auth::id();
         $data['updated_by'] = Auth::id();
+        $data['partner_id'] = $request->partner_id;
 
         Billing::create($data);
     }
@@ -498,6 +504,20 @@ class BillingController extends Controller
         $billing->payment_status = $validatedData['payment_status'];
         $billing->updated_by = Auth::id();
         $billing->save();
+
+        // return response()->json(['success' => true]);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id' => 'required|exists:organizations,id',
+            'status' => 'required|boolean',
+        ]);
+
+        $organization = Organization::find($validatedData['id']);
+        $organization->status = $validatedData['status'];
+        $organization->save();
 
         // return response()->json(['success' => true]);
     }

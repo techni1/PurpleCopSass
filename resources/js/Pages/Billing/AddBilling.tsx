@@ -16,7 +16,7 @@ import { Select, Textarea } from "@headlessui/react";
 import axios from "axios";
 
 
-export default function AddBilling({ show, setShow, mastersetting, organization, entity, packagedata, offers, framwork, bank }: any) {
+export default function AddBilling({ show, setShow, mastersetting, organization, entity, packagedata, offers, framwork, bank, partneruser }: any) {
     const { data, setData, post, processing, errors, reset } = useForm({
         organization_id: "",
         entity_id: "",
@@ -40,8 +40,7 @@ export default function AddBilling({ show, setShow, mastersetting, organization,
         discountRate: "",
         bank_details: "",
         paymentnotes: "",
-
-
+        partner_id:""
 
     });
 
@@ -515,178 +514,215 @@ export default function AddBilling({ show, setShow, mastersetting, organization,
                                         </Card>
 
 
+                                        <div className="col-md-12">
+                                            <div className="row">
+
+                                                {/* 1st div  */}
+                                                <div className="col-md-6">
+                                                    
+                                                    <div className="col-md-12">
+                                                        <Form.Label
+                                                            htmlFor="partner_id"
+                                                            className="form-label"
+                                                        >
+                                                            Select Partner
+                                                        </Form.Label>
+
+                                                        <select
+                                                            className="form-control form-select"
+                                                            onChange={(e: any) => setData("partner_id", e.target.value)}
+                                                            name="partner_id"
+                                                            id="partner_id"
+                                                        >
+                                                            <option value="">Select Partner</option>
+                                                            {partneruser.map((puser: any) => (
+                                                                <option key={puser.id} value={puser.id}>
+                                                                    {puser.name}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+
+                                                        <Form.Control.Feedback
+                                                            type="invalid"
+                                                            className="mt-2 d-block"
+                                                        >
+                                                            {errors.partner_id}
+                                                        </Form.Control.Feedback>
+                                                    </div>
+                                                    <div className="col-md-12">
+                                                        <Form.Label
+                                                            htmlFor="bank_details"
+                                                            className="form-label"
+                                                        >
+                                                            Select Bank
+                                                        </Form.Label>
+
+                                                        <select
+                                                            className="form-control form-select"
+                                                            onChange={(e: any) => setData("bank_details", e.target.value)}
+                                                            name="bank_details"
+                                                            id="bank_details"
+                                                            required
+                                                        >
+                                                            <option value="">Select Bank</option>
+                                                            {bank.map((odata: any) => (
+                                                                <option key={odata.id} value={odata.id}>
+                                                                    {odata.bank_accountname} - {odata.bank_accountno}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+
+                                                        <Form.Control.Feedback
+                                                            type="invalid"
+                                                            className="mt-2 d-block"
+                                                        >
+                                                            {errors.bank_details}
+                                                        </Form.Control.Feedback>
 
 
-                                        <div className="col-md-6">
-                                            <Form.Label
-                                                htmlFor="bank_details"
-                                                className="form-label"
-                                            >
-                                                Select Bank
-                                            </Form.Label>
 
-                                            <select
-                                                className="form-control form-select"
-                                                onChange={(e: any) => setData("bank_details", e.target.value)}
-                                                name="bank_details"
-                                                id="bank_details"
-                                                required
-                                            >
-                                                <option value="">Select Bank</option>
-                                                {bank.map((odata: any) => (
-                                                    <option key={odata.id} value={odata.id}>
-                                                        {odata.bank_accountname} - {odata.bank_accountno}
-                                                    </option>
-                                                ))}
-                                            </select>
-
-                                            <Form.Control.Feedback
-                                                type="invalid"
-                                                className="mt-2 d-block"
-                                            >
-                                                {errors.bank_details}
-                                            </Form.Control.Feedback>
+                                                    </div>
 
 
+                                                    <div className="col-md-12">
+                                                       <Form.Label
+                                                            htmlFor="paymentnotes"
+                                                            className="form-label"
+                                                        >
+                                                            Payment Notes
+                                                        </Form.Label>
+                                                        <Textarea
+                                                            id="paymentnotes"
+                                                            className="form-control"
+                                                            value={data.paymentnotes}
+                                                            onChange={(e: any) => setData("paymentnotes", e.target.value)}
+                                                        ></Textarea>
+                                                        <Form.Control.Feedback
+                                                            type="invalid"
+                                                            className="mt-2 d-block"
+                                                        >
+                                                            {errors.paymentnotes}
+                                                        </Form.Control.Feedback>
 
+                                                    </div>
+                                                
+                                                </div>
+
+
+{/* 2nd div  */}
+
+                                                <div className="col-md-6">
+                                                    <div className="col-md-12">
+                                                    <h6>Sub Total Amount: ${data.finalAmount.toFixed(2)}</h6>
+
+                                                    </div>
+                                                    <div className="col-md-12">
+                                                        <Form.Label
+                                                            htmlFor="packageid"
+                                                            className="form-label"
+                                                        >
+                                                            Package
+                                                        </Form.Label>
+
+                                                        <select
+                                                            className="form-control form-select"
+                                                            value={data.packageRate}
+                                                            onChange={handlePackageChange}
+                                                            name="packageid"
+                                                            id="packageid"
+                                                            required
+                                                        >
+                                                            <option></option>
+                                                            {packagedata.map((pdata: any) => (
+                                                                <option value={pdata.id} data-package={pdata.package_amount}>{pdata.name} - {pdata.package_amount}</option>
+                                                            ))}
+                                                        </select>
+
+
+                                                        <Form.Control.Feedback
+                                                            type="invalid"
+                                                            className="mt-2 d-block"
+                                                        >
+                                                            {errors.packageid}
+                                                        </Form.Control.Feedback>
+                                                    </div>
+                                                    <div className="col-md-12">
+                                                        <Form.Label
+                                                            htmlFor="name"
+                                                            className="form-label"
+                                                        >
+                                                            Offer
+                                                        </Form.Label>
+
+                                                        <select
+                                                            className="form-control form-select"
+
+                                                            value={data.discountRate}
+                                                            onChange={handleDiscountRateChange}
+                                                            name="offerid"
+
+                                                        >
+                                                            <option></option>
+                                                            {offers.map((offdata: any) => (
+                                                                <option value={offdata.id} data-discount={offdata.percentage}>{offdata.name} -  {offdata.percentage}%</option>
+                                                            ))}
+                                                        </select>
+
+                                                        <Form.Control.Feedback
+                                                            type="invalid"
+                                                            className="mt-2 d-block"
+                                                        >
+                                                            {errors.offerid}
+                                                        </Form.Control.Feedback>
+                                                    </div>
+
+
+                                                    <div className="col-md-12">
+                                                        <Form.Label
+                                                            htmlFor="name"
+                                                            className="form-label"
+                                                        >
+                                                            Select Tax
+                                                        </Form.Label>
+
+                                                        <select
+                                                            id="taxRate"
+                                                            className="form-control form-select"
+                                                            value={data.taxRate} // Reflect updated state
+                                                            onChange={(e) => handleTaxRateChange(e.target.value)} // Handle changes
+
+                                                        >
+                                                            <option value={0}>0%</option>
+                                                            <option value={18}>18%</option>
+                                                        </select>
+                                                        <Form.Control.Feedback
+                                                            type="invalid"
+                                                            className="mt-2 d-block"
+                                                        >
+                                                            {errors.master_key}
+                                                        </Form.Control.Feedback>
+                                                    </div>
+
+                                                    <div className="col-md-12">
+
+                                                        <h6>Discount Amount: {Number(data.discountAmount).toFixed(2)}%</h6>
+                                                        <h6>Package Amount: ${Number(data.packageaddon).toFixed(2)}</h6>
+                                                        <h6>Tax Amount: ${Number(data.taxAmount).toFixed(2)}</h6>
+                                                    </div>
+
+                                                    <div className="col-md-12">
+                                                        <h5>Billing Amount: ${data.billingAmount.toFixed(2)}</h5>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="col-md-6">
-                                            <h6>Sub Total Amount: ${data.finalAmount.toFixed(2)}</h6>
-
-                                        </div>
-                                        <div className="col-md-6">
-
-                                            <Form.Label
-                                                htmlFor="paymentnotes"
-                                                className="form-label"
-                                            >
-                                                Payment Notes
-                                            </Form.Label>
 
 
-                                            <Textarea
-                                                id="paymentnotes"
-                                                className="form-control"
-                                                value={data.paymentnotes}
-                                                onChange={(e: any) => setData("paymentnotes", e.target.value)}
-                                            ></Textarea>
-
-
-                                            <Form.Control.Feedback
-                                                type="invalid"
-                                                className="mt-2 d-block"
-                                            >
-                                                {errors.paymentnotes}
-                                            </Form.Control.Feedback>
-
-
-                                        </div>
-
-                                        <div className="col-md-6">
-                                            <Form.Label
-                                                htmlFor="packageid"
-                                                className="form-label"
-                                            >
-                                                Package
-                                            </Form.Label>
-
-                                            <select
-                                                className="form-control form-select"
-                                                value={data.packageRate}
-                                                onChange={handlePackageChange}
-                                                name="packageid"
-                                                id="packageid"
-                                                required
-                                            >
-                                                <option></option>
-                                                {packagedata.map((pdata: any) => (
-                                                    <option value={pdata.id} data-package={pdata.package_amount}>{pdata.name} - {pdata.package_amount}</option>
-                                                ))}
-                                            </select>
-
-
-                                            <Form.Control.Feedback
-                                                type="invalid"
-                                                className="mt-2 d-block"
-                                            >
-                                                {errors.packageid}
-                                            </Form.Control.Feedback>
-                                        </div>
-                                        <div className="col-md-6"></div>
-                                        <div className="col-md-6">
-                                            <Form.Label
-                                                htmlFor="name"
-                                                className="form-label"
-                                            >
-                                                Offer
-                                            </Form.Label>
-
-                                            <select
-                                                className="form-control form-select"
-
-                                                value={data.discountRate}
-                                                onChange={handleDiscountRateChange}
-                                                name="offerid"
-
-                                            >
-                                                <option></option>
-                                                {offers.map((offdata: any) => (
-                                                    <option value={offdata.id} data-discount={offdata.percentage}>{offdata.name} -  {offdata.percentage}%</option>
-                                                ))}
-                                            </select>
-
-                                            <Form.Control.Feedback
-                                                type="invalid"
-                                                className="mt-2 d-block"
-                                            >
-                                                {errors.offerid}
-                                            </Form.Control.Feedback>
-                                        </div>
-
-                                        <div className="col-md-6"></div>
-
-                                        <div className="col-md-6">
-                                            <Form.Label
-                                                htmlFor="name"
-                                                className="form-label"
-                                            >
-                                                Select Tax
-                                            </Form.Label>
-
-                                            <select
-                                                id="taxRate"
-                                                className="form-control form-select"
-                                                value={data.taxRate} // Reflect updated state
-                                                onChange={(e) => handleTaxRateChange(e.target.value)} // Handle changes
-
-                                            >
-                                                <option value={0}>0%</option>
-                                                <option value={18}>18%</option>
-                                            </select>
-                                            <Form.Control.Feedback
-                                                type="invalid"
-                                                className="mt-2 d-block"
-                                            >
-                                                {errors.master_key}
-                                            </Form.Control.Feedback>
-                                        </div>
-
-
-
-                                        <div className="col-md-6"></div>
-                                        <div className="col-md-6">
-
-                                            <h6>Discount Amount: {Number(data.discountAmount).toFixed(2)}%</h6>
-                                            <h6>Package Amount: ${Number(data.packageaddon).toFixed(2)}</h6>
-                                            <h6>Tax Amount: ${Number(data.taxAmount).toFixed(2)}</h6>
-                                        </div>
-
-
-
-                                        <div className="col-md-6"></div>
-                                        <div className="col-md-6">
-                                            <h5>Billing Amount: ${data.billingAmount.toFixed(2)}</h5>
-                                        </div>
+                                        
+                                       
+                                        
 
                                     </div>
                                 </div>

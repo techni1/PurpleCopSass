@@ -30,7 +30,14 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        $organizations = Organization::with(['createdBy', 'updatedBy'])->get();
+
+        if (auth()->user()->hasRole('Partner')) {
+            $organizations = Organization::with(['createdBy', 'updatedBy'])->where('partner_id', Auth::id())->get();
+        } else {
+
+            $organizations = Organization::with(['createdBy', 'updatedBy'])->get();
+        }
+
 
 
         return inertia('Organization/Index', [
@@ -62,6 +69,11 @@ class OrganizationController extends Controller
         $logo = $data['logo'] ?? null;
         $data['legal_name'] = $data['legalName'];
         $data['security_officer'] = $data['securityOfficer'];
+        if (auth()->user()->hasRole('Partner')) {
+            $data['iscreate_partner'] = '1';
+            $data['partner_id'] = Auth::id();
+        }
+
         $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
         if ($logo) {

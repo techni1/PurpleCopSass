@@ -156,13 +156,18 @@ export default function Show({ auth, billing, mastersetting, organization, entit
                                 <h6>Billing Status</h6>
                                 <p>{billing.billing_status}</p>
                             </div>
+                            
                             <div className="col-md-4">
-                                <h6>Next Billing Date</h6>
-                                <p>{billing.next_billingdate}</p>
+                                <h6>Added By</h6>
+                                <p>{billing?.created_by?.username}</p>
+                                <small>Added Date Time : { billing.created_at}</small>
                             </div>
-
-
-
+                            <div className="col-md-4">
+                                <h6>Last Modified By</h6>
+                                <p>{billing?.updated_by?.username}</p>
+                                <small>Added Date Time : { billing.updated_at}</small>
+                            </div>
+                     
                         </div>
                        </div>
                 </CardBody>

@@ -11,6 +11,7 @@ const NavdataPartner = () => {
   const [isUserSubmenu, setIsUserSubmenu] = useState<boolean>(false);
   const [isClient, setIsClient] = useState<boolean>(false);
   const [isBilling, setIsBilling] = useState<boolean>(false);
+  const [isOrganization, setIsOrganization] = useState<boolean>(false);
 
 
   const [iscurrentState, setIscurrentState] = useState("Dashboard");
@@ -56,27 +57,16 @@ const NavdataPartner = () => {
     },
     
     {
-      id: "client",
-      label: "Client",
+      id: "organization",
+      label: "Organization",
       icon: "ri-shield-user-line",
+      link: route("quotation.index"),
+      stateVariables: isOrganization,
       click: function (e: any) {
-        e.preventDefault();
-        setIsClient(!isClient);
-        setIscurrentState("Clients");
-        updateIconSidebar(e);
-      },
-      stateVariables: isClient,
-      subItems: [
-        {
-          id: "organization",
-          label: "Organization",
-          link: route("organization.index"),
-          parentId: "clients",
-        },
-      ],
+        setIsOrganization(!isOrganization);
+        setIscurrentState("Organization");
+      }
     },
-   
-
 
     {
       id: "billing",

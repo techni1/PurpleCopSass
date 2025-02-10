@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Col, Row, Button, CardBody, Card } from "react-bootstrap";
 import AddBilling from "./AddBilling";
 
-const Section = ({ mastersetting, organization, entity, packageshow, offers, framwork, bank }: any) => {
+const Section = ({ mastersetting, organization, entity, packageshow, offers, framwork, partneruser, bank }: any) => {
 
   const [show, setShow] = useState<boolean>(false);
   const [isBottom, setIsBottom] = useState<boolean>(false);
@@ -64,6 +64,7 @@ const Section = ({ mastersetting, organization, entity, packageshow, offers, fra
         offers={offers}
         framwork={framwork}
         bank={bank}
+        partneruser={partneruser}
       />
 
     </React.Fragment>

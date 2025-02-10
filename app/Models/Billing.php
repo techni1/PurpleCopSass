@@ -42,7 +42,8 @@ class Billing extends Model
         'quotation_date',
         'cancel_by',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'partner_id'
     ];
 
 

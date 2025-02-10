@@ -1,7 +1,37 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { Inertia } from "@inertiajs/inertia";
 import TableContainer from "../../Components/Common/TableContainerReactTable";
 import { Link } from "@inertiajs/react";
 import Loader from "../../Components/Common/Loader";
+import { Button, Form } from "react-bootstrap";
+import { APPROVER_STATUS_CLASS_MAP_DATE, APPROVER_STATUS_TEXT_MAP } from "../../Components/constants/statusConstant";
+
+const StatusToggle = ({ id, status }: { id: number; status: boolean }) => {
+  const [checked, setChecked] = useState(status);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newStatus = e.target.checked;
+    setChecked(newStatus);
+
+    Inertia.post('/update-status', { id, status: newStatus }, {
+      onError: (errors) => {
+        console.error('Error updating status:', errors);
+      }
+    });
+  };
+
+  return (
+    <div className="form-check form-switch form-switch-right form-switch-md">
+      <Form.Check.Input
+        onChange={handleChange}
+        checked={checked}
+        className="form-check-input code-switcher"
+        id={`status-toggle-${id}`}
+        type="checkbox"
+      />
+    </div>
+  );
+};
 
 const SearchTable = ({ routeTo, tableData }: any) => {
   const columns = useMemo(
@@ -51,6 +81,26 @@ const SearchTable = ({ routeTo, tableData }: any) => {
         accessorKey: "address",
         enableColumnFilter: false,
       },
+      {
+        header: "Partner ",
+        accessorKey: "addedby.username",
+        enableColumnFilter: false,
+      },
+      
+      {
+        header: "Status",
+        cell: (info: any) => (
+          <>
+            <span className={APPROVER_STATUS_CLASS_MAP_DATE[info.getValue()]}>
+              {APPROVER_STATUS_TEXT_MAP[info.getValue()]}
+            </span>
+            <StatusToggle id={info.row.original.id} status={info.getValue()} />
+          </>
+        ),
+        accessorKey: "status",
+        enableColumnFilter: false,
+      },
+
     ],
     []
   );

@@ -31,14 +31,15 @@ export default function Index({ organizations, success }: any) {
         <Container fluid>
           <BreadCrumb title="Organizations" pageTitle="Dashboard" />
           {/* {userRole[0] == "Super-Admin" && (
-            <Row>
+            
+          )} */}
+          <Row>
               <Col>
                 <div className="h-100">
                   <Section />
                 </div>
               </Col>
             </Row>
-          )} */}
           {success && (
             <Row>
               <Col>

@@ -122,7 +122,7 @@ export default function Create({ auth, securityOfficers }: any) {
                         <Form.Control
                           id="contact_us"
                           name="contact_us"
-                          placeholder="Enter URL"
+                          placeholder="Enter Contact Us"
                           value={data.contact_us}
                           className={
                             "mt-1 form-control" +
@@ -150,7 +150,7 @@ export default function Create({ auth, securityOfficers }: any) {
                         <Form.Control
                           id="terms_condition"
                           name="terms_condition"
-                          placeholder="Enter URL"
+                          placeholder="Enter Terms Condition"
                           value={data.terms_condition}
                           className={
                             "mt-1 form-control" +
@@ -178,7 +178,7 @@ export default function Create({ auth, securityOfficers }: any) {
                         <Form.Control
                           id="privacy_policy"
                           name="privacy_policy"
-                          placeholder="Enter URL"
+                          placeholder="Enter Privacy Policy"
                           value={data.privacy_policy}
                           className={
                             "mt-1 form-control" +
@@ -203,7 +203,7 @@ export default function Create({ auth, securityOfficers }: any) {
                         <Form.Control
                           id="founded_in"
                           name="founded_in"
-                          placeholder="founded in"
+                          placeholder="Founded In"
                           value={data.founded_in}
                           className={
                             "mt-1 form-control" +

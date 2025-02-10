@@ -5,7 +5,7 @@ import Layout from "../../Layouts";
 import Section from "./Section";
 import { SearchTable } from "./SearchTable";
 
-export default function Index({ auth, billing, mastersetting, organization, entity, packagedata, offers, framwork, bank, success }: any) {
+export default function Index({ auth, billing, mastersetting, organization, entity, packagedata, offers, framwork, bank, partneruser, success }: any) {
 
    return (
     <React.Fragment>
@@ -26,7 +26,8 @@ export default function Index({ auth, billing, mastersetting, organization, enti
                   entity={entity}
                   packageshow={packagedata}
                   offers={offers}
-                  framwork={framwork}
+                   framwork={framwork}
+                   partneruser={partneruser}
                 />
               </div>
             </Col>
@@ -60,6 +61,7 @@ export default function Index({ auth, billing, mastersetting, organization, enti
                     packageshow={packagedata}
                     offers={offers}
                     framwork={framwork}
+                    partneruser={partneruser}
                   />
                 </Card.Body>
               </Card>
