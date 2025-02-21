@@ -93,4 +93,9 @@ class Organization extends Model
     {
         return $this->belongsTo(Billing::class, 'organization_id');
     }
+
+    public function billings()
+    {
+        return $this->hasMany(Billing::class, 'organization_id');
+    }
 }

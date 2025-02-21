@@ -287,6 +287,14 @@ const NavdataAdmin = () => {
           link: route("entity.index"),
           parentId: "entity",
         },
+
+
+        {
+          id: "accountsetup",
+          label: "Account Setup",
+          link: route("accountsetup.index"),
+          parentId: "clients",
+        },
       ],
     },
 

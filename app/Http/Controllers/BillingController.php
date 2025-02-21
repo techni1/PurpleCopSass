@@ -11,6 +11,8 @@ use App\Models\FramworkPrice;
 use App\Models\MasterSetting;
 use App\Models\Offers;
 use App\Models\Organization;
+use App\Models\ParnterBillingCommission;
+use App\Models\Partner;
 use App\Models\Sasspackage;
 use App\Models\User;
 use Carbon\Carbon;
@@ -50,7 +52,8 @@ class BillingController extends Controller
         $mastersetting = MasterSetting::all();
         $bank = BankDetails::all();
 
-        $partner_user = User::role('Partner')->get();
+        //$partner_user = User::role('Partner')->get();
+        $partner_user = Partner::all();
 
 
         return inertia("Billing/Index", [
@@ -105,6 +108,47 @@ class BillingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    public function CalculateCommission($billing_id, $partner_id)
+    {
+        $partner = Partner::find($partner_id);
+
+        if (!$partner) {
+            throw new InvalidArgumentException('Partner not found.');
+        }
+
+        $billing = Billing::find($billing_id);
+
+        if (!$billing) {
+            throw new InvalidArgumentException('Billing not found.');
+        }
+
+        $commission = 0;
+        $commission_amount = 0;
+
+        if ($partner->partner_status == 'active') {
+            $commission = $partner->commission_rate;
+            $commission_amount = ($billing->billingAmount * $commission) / 100;
+        }
+
+        // Insert into parnter_billing_commissions
+        $inData = [
+            'billing_id' => $billing_id,
+            'partner_id' => $partner_id,
+            'commission' => $commission,
+            'commission_amount' => $commission_amount,
+            'status' => 'pending',
+        ];
+
+        ParnterBillingCommission::create($inData);
+
+        return [
+            'commission' => $commission,
+            'commission_amount' => $commission_amount,
+        ];
+    }
+
+
     public function store(BillingRequest $request)
     {
 
@@ -135,7 +179,7 @@ class BillingController extends Controller
         $data['offer_id'] =  $request->discountRate;
         $data['discount_amt'] =  '0.00';
         $data['billingAmount'] =  $request->billingAmount;
-        $data['bank'] =  $request->bank_details;
+        $data['bank_deatils'] =  $request->bank_details;
         $data['terms'] =  $request->paymentnotes;
         $data['next_billingdate'] =   $nextBillingdate;
         $data['billing_type'] = 'One Time';
@@ -146,7 +190,11 @@ class BillingController extends Controller
         $data['updated_by'] = Auth::id();
         $data['partner_id'] = $request->partner_id;
 
-        Billing::create($data);
+
+
+        $billing = Billing::create($data);
+
+        $this->CalculateCommission($billing->id, $request->partner_id);
     }
     public function quotationstore(BillingRequest $request)
     {

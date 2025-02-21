@@ -2,30 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ComplianceResource;
-use App\Http\Resources\DocumentAccessResource;
-use App\Http\Resources\NdaResource;
-use App\Http\Resources\OrganizationEvidenceResource;
-use App\Http\Resources\OrganizationPolicyResource;
-use App\Http\Resources\OrganizationResource;
-use App\Models\Compliance;
-use App\Models\CorrectiveAction;
-use App\Models\DocumentAccess;
-use App\Models\Evidence;
-use App\Models\Framework;
-use App\Models\Nda;
-use App\Models\OrganizationEvidence;
-use App\Models\OrganizationFramework;
-use App\Models\OrganizationPolicy;
-use App\Models\People;
-use App\Models\Policy;
-use App\Models\Provision;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Spatie\Activitylog\Models\Activity;
+use App\Models\ParnterBillingCommission;
 
 class AdminDashboardController extends Controller
 {
@@ -88,120 +71,7 @@ class AdminDashboardController extends Controller
     }
 
 
-    public function framework()
-    {
 
-        $array = [];
-        return $array;
-    }
-    public function organizationpolicy()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function organizationevidence()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function people()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function lmsadminaccess()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function purplecop()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function assets()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function riskregister()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function correctiveaction()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function auditcenter()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function reportcomplience()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function assetcategory()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function assetsubcategory()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function assetlocation()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function criticality()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function vendor()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function risk()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function threats()
-    {
-
-        $array = [];
-        return $array;
-    }
-    public function riskcategory()
-    {
-
-        $array = [];
-        return $array;
-    }
     public function userlms()
     {
 
@@ -212,6 +82,22 @@ class AdminDashboardController extends Controller
 
 
     /*---------------------BOF Get Policy Due ---------------*/
+
+
+    /*---------------------BOF Partner Billing Commission ---------------*/
+
+
+    public function partnerBilling()
+    {
+        $partnerBillingCommission = ParnterBillingCommission::with('billing', 'partner')->get();
+        return inertia('PartnerBillingCommission/Index', [
+            'partnerBillingCommission' => $partnerBillingCommission
+        ]);
+    }
+
+
+    /*---------------------EOF Partner Billing Commission ---------------*/
+
 
 
 
@@ -234,6 +120,8 @@ class AdminDashboardController extends Controller
             'totalguidlines' => '3',
         );
 
+
+        //$partner 
 
         // $auditDetails = $this->auditDetails($framworks);
 

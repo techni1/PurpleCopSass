@@ -14,7 +14,6 @@ class Partner extends Model
         'email',
         'phone',
         'pancard',
-        'partners_status',
         'legalname',
         'category_id',
         'second_contactno',
@@ -31,6 +30,7 @@ class Partner extends Model
         'logo',
         'commission_rate',
         'payment_released',
+        'partner_status',
         'created_by',
         'updated_by',
     ];

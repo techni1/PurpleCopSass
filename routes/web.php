@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountSetupController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Api\AuthUserController;
@@ -224,6 +225,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-assignee-list', [UserApiController::class, 'get']);
 
     Route::get('/get-auth-user', [AuthUserController::class, 'get'])->name("get.auth.user");
+
+
+    Route::resource('accountsetup', AccountSetupController::class);
+
     //AssignUser 
     Route::controller(VelzonRoutesController::class)->group(function () {
         // dashboard routes
