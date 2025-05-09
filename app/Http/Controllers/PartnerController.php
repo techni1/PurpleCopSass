@@ -126,6 +126,8 @@ class PartnerController extends Controller
 
         $userData['name'] = $data['legalname'];
         $userData['email'] = $data['email'];
+        $userData['user_contact_no'] = $data['phone'];
+
 
         $profileImg = $request->file('logo') ?? null;
         if ($profileImg) {
@@ -152,20 +154,75 @@ class PartnerController extends Controller
      */
     public function edit(Partner $partner) {}
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePartnerRequest $request, Partner $partner)
     {
-        //
-        $updated = $request->validated();
+        // Debugging: Log the incoming data
+        $validated = $request->validated();
 
-        $updated['address'] = $request->address ? $request->address : '';
-        $updated['updated_by'] = Auth::id();
-        $partner->update($updated);
+        // Handle file uploads
+        if ($request->hasFile('logo')) {
+            $validated['logo'] = $request->file('logo')->store('partner/logo/' . Str::random(), 'public');
+        }
 
-        //  return to_route('organization.index');
+        $validated['phone'] = $request->phone ? $request->phone : '';
+        $validated['primary_contactno'] = $request->phone ? $request->phone : '';
+        $validated['second_contactno'] = $request->second_contactno ? $request->second_contactno : '';
+        $validated['address'] = $request->address ? $request->address : '';
+        $validated['updated_by'] = Auth::id();
+        $validated['partner_address'] = $request->partner_address ? $request->partner_address : '';
+        $validated['bank_branch'] = $request->bank_branch ? $request->bank_branch : '';
+        $validated['bank_address'] = $request->bank_address ? $request->bank_address : '';
+        $validated['tprm'] = $request->tprm ? $request->tprm : '';
+        $validated['msme'] = $request->msme ? $request->msme : '';
+
+        $partner->update($validated);
+
+
+
+
+        $indata = array();
+        // add document in parnter id 
+
+        $gst_vat_document = $request->file('gst_vat_document') ?? null;
+
+        if ($gst_vat_document) {
+
+            $indata[1]['document_name'] = 'gst_vat_document';
+            $indata[1]['doucment'] =  $gst_vat_document->store('partner/vat/' . Str::random(), 'public');
+        }
+
+        $cancel_cheque =  $request->file('cancel_cheque') ?? null;
+        if ($cancel_cheque) {
+            $indata[2]['document_name'] = 'cancel_cheque';
+            $indata[2]['document'] = $cancel_cheque->store('partner/cheque/' . Str::random(), 'public');
+        }
+
+        $coi_document =  $request->file('coi_document') ?? null;
+        if ($coi_document) {
+            $indata[3]['document_name'] = 'coi_document';
+            $indata[3]['document'] = $coi_document->store('partner/coi/' . Str::random(), 'public');
+        }
+
+        $pancard_document =  $request->file('pancard_document') ?? null;
+        if ($pancard_document) {
+            $indata[4]['document_name'] = 'pancard_document';
+            $indata[4]['document'] = $pancard_document->store('partner/pancar/' . Str::random(), 'public');
+        }
+
+        foreach ($indata as $datain) {
+            if (!empty($datain['doucment'])) {
+                $in['partnerid'] = $partner->id;
+                $in['document_name'] = $datain['document_name'];
+                $in['document'] = $datain['doucment'];
+
+                PartnerDocuments::create($in);
+            }
+            //  dd($datain);
+        }
+
+        return redirect()->route('partner.index')->with('success', 'Partner updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

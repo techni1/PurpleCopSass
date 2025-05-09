@@ -36,6 +36,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'organization_id',
         'user_profile_pic',
         'user_remark',
+        'tenant_id',
         'added_by',
         'updated_by'
     ];
@@ -105,5 +106,10 @@ class User extends Authenticatable implements MustVerifyEmail
             ->leftJoin('departments', 'users.department_id', '=', 'departments.id')
             ->where('users.id', $userid)
             ->first();
+    }
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
     }
 }
