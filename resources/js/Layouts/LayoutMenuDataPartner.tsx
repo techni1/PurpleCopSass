@@ -12,7 +12,7 @@ const NavdataPartner = () => {
   const [isClient, setIsClient] = useState<boolean>(false);
   const [isBilling, setIsBilling] = useState<boolean>(false);
   const [isOrganization, setIsOrganization] = useState<boolean>(false);
-
+  const [isDeal, setIsDeal] = useState<boolean>(false);
 
   const [iscurrentState, setIscurrentState] = useState("Dashboard");
 
@@ -44,7 +44,6 @@ const NavdataPartner = () => {
     if (iscurrentState !== "Billings") {
       setIsBilling(false);
     }
-   
   }, [history, iscurrentState, isUserManagement, isUserSubmenu]);
 
   const menuItems: any = [
@@ -55,17 +54,28 @@ const NavdataPartner = () => {
       icon: "ri-home-line",
       isHidden: false,
     },
-    
+
+    {
+      id: "deal",
+      label: "Deal",
+      icon: "ri-shake-hands-line",
+      link: route("dealregister.index"),
+      stateVariables: isDeal,
+      click: function (e: any) {
+        setIsDeal(!isDeal);
+        setIscurrentState("Deal");
+      },
+    },
     {
       id: "organization",
       label: "Organization",
       icon: "ri-shield-user-line",
-      link: route("quotation.index"),
+      link: route("organization.index"),
       stateVariables: isOrganization,
       click: function (e: any) {
         setIsOrganization(!isOrganization);
         setIscurrentState("Organization");
-      }
+      },
     },
 
     {
@@ -77,10 +87,10 @@ const NavdataPartner = () => {
       click: function (e: any) {
         setIsBilling(!isBilling);
         setIscurrentState("Billing");
-      }
+      },
     },
 
-   ,
+    ,
   ];
   return <React.Fragment>{menuItems}</React.Fragment>;
 };

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Spatie\Activitylog\Models\Activity;
 use App\Models\ParnterBillingCommission;
+use App\Models\Billing;
 
 class AdminDashboardController extends Controller
 {
@@ -98,6 +99,52 @@ class AdminDashboardController extends Controller
 
     /*---------------------EOF Partner Billing Commission ---------------*/
 
+    /*-----------------------BOF Total Commission ---------------*/
+
+    public function totalCommission()
+    {
+        $totalCommission = ParnterBillingCommission::with('billing', 'partner')
+            ->select('parnter_billing_commissions.*')
+            ->where('partner_id', Auth::user()->id)
+            ->groupBy('parnter_billing_commissions.billing_id')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $commissionAmount = 0;
+
+        foreach ($totalCommission as $commission) {
+            $commissionAmount += $commission->commission_amount;
+        }
+
+        return $commissionAmount;
+    }
+
+
+    /*-----------------------EOF Total Commission ---------------*/
+
+    /*---------------------BOF Organization Policy  due date coming next 30 Days ---------------*/
+    public function dueDate($days)
+    {
+        $dueBilling = Billing::with('organization.partner')
+            ->select('billings.*') // Explicitly select columns
+            ->where('next_billingdate', '>=', Carbon::now())
+            ->where('next_billingdate', '<=', Carbon::now()->addDays($days))
+            ->whereHas('organization.partner', function ($query) {
+                $query->where('id', '=', Auth::user()->id);
+            })
+            ->groupBy('billings.organization_id') // Ensure grouping aligns with selected columns
+            ->orderBy('next_billingdate', 'desc') // Replace latest() with orderBy for clarity
+            ->get();
+
+        return  $dueBilling;
+    }
+
+
+
+
+
+
+
+    /*---------------------EOF Organization Policy  due date coming ---------------*/
 
 
 
@@ -127,6 +174,13 @@ class AdminDashboardController extends Controller
 
 
         // dd($correctiveAction);
+
+        $duebillingData = $this->dueDate('30');
+
+
+
+
+
         switch ($user->roles[0]->name) {
             case 'Super-Admin':
                 return inertia(
@@ -144,6 +198,8 @@ class AdminDashboardController extends Controller
                     [
                         'fdata' => $facts,
                         'userLogs' => $userLogs,
+                        'duebillingData' => $duebillingData,
+                        'totalCommission' => $this->totalCommission(),
 
                     ]
                 );
