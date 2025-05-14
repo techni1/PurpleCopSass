@@ -1,42 +1,25 @@
 import React, { useState } from "react";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import { Alert, Card, Col, Container, Row } from "react-bootstrap";
-import Layout from "../../../Layouts";
+
+import Layout from "../../Layouts";
 import Section from "./Section";
 import { SearchTable } from "./SearchTable";
 
-export default function Index({
-  auth,
-  billing,
-  mastersetting,
-  organization,
-  entity,
-  packagedata,
-  offers,
-  framwork,
-  bank,
-  success,
-}: any) {
+export default function Index({ auth, dealregister, success }: any) {
   return (
     <React.Fragment>
-      <Head title="Proforma Invoice" />
+      <Head title="Deal Register" />
 
       <div className="page-content">
         <Container fluid>
-          {/* <pre>{JSON.stringify(billing, undefined, 2)}</pre> */}
           {/* <BreadCrumb title="Employee" pageTitle="Dashboard" /> */}
+
+          {/* <pre>{JSON.stringify(dealregister, undefined, 2)}</pre> */}
           <Row>
             <Col>
               <div className="h-100">
-                <Section
-                  mastersetting={mastersetting}
-                  organization={organization}
-                  bank={bank}
-                  entity={entity}
-                  packageshow={packagedata}
-                  offers={offers}
-                  framwork={framwork}
-                />
+                <Section />
               </div>
             </Col>
           </Row>
@@ -62,14 +45,7 @@ export default function Index({
                 <Card.Body>
                   <SearchTable
                     routeTo="mastersetting.show"
-                    tableData={billing}
-                    mastersetting={mastersetting}
-                    organization={organization}
-                    bank={bank}
-                    entity={entity}
-                    packageshow={packagedata}
-                    offers={offers}
-                    framwork={framwork}
+                    tableData={dealregister}
                   />
                 </Card.Body>
               </Card>

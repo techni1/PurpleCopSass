@@ -451,6 +451,58 @@ class BillingController extends Controller
     }
 
 
+
+
+    public function duepayment(Request $request)
+    {
+        try {
+            $query = Billing::query();
+
+            if ($request->has('organization_id')) {
+                $query->where('organization_id', $request->organization_id);
+            }
+            // Optional: Filter by date range
+            if ($request->has(['start_date', 'end_date'])) {
+                $query->whereBetween('invoice_due_date', [$request->start_date, $request->end_date]);
+            }
+
+            $query->where('payment_status', '=', 'Pending');
+            $query->where('next_billingdate', '>=', Carbon::now());
+            // Pagination (optional)
+            $billingHistory = $query->with(['organization.partner', 'package'])
+                ->paginate($request->get('per_page', 15)); // Default to 15 per page
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error fetching billing history',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
+
+
+
+        return inertia("Billing/Duepayment/Index", [
+            'duebilling' =>  $billingHistory,
+            'success' => session("success"),
+        ]);
+
+
+
+        // $dueBilling = Billing::with('organization.partner')
+        //     ->select('billings.*') // Explicitly select columns
+        //     ->where('next_billingdate', '>=', Carbon::now())      
+        //     ->whereHas('organization.partner', function ($query) {
+        //         $query->where('id', '=', Auth::user()->id);
+        //     })
+        //     ->groupBy('billings.organization_id') // Ensure grouping aligns with selected columns
+        //     ->orderBy('next_billingdate', 'desc') // Replace latest() with orderBy for clarity
+        //     ->get();
+    }
+
+
     // public function accountcheck(Request $request)
     // {
     //     // Sample data or logic

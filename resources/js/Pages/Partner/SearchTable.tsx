@@ -32,11 +32,13 @@ const SearchTable = ({ tableData, pcategory, index = 0 }: any) => {
     }
   };
 
-
   const handlePartner = (partner: any) => {
     if (partner) {
-      setShow(true);
-      setSelectedPartner(partner);
+      setSelectedPartner(null); // Reset the selected partner to ensure re-rendering
+      setTimeout(() => {
+        setSelectedPartner(partner);
+        setShow(true);
+      }, 0); // Delay setting the new partner to allow the component to reset
     }
   };
 
@@ -78,19 +80,23 @@ const SearchTable = ({ tableData, pcategory, index = 0 }: any) => {
       },
       {
         header: "Status",
-        cell: (info: any) => (
-          <div
-            className={`d-grid gap-2 text-white text-capitalize btn btn-sm btn-  ${
-              info.getValue() === "active"
-                ? "bg-success"
-                : "bg-danger"
-            }`}
-          >
-            {info.getValue()}
-          </div>
-        ),
-
-        accessorKey: "partners_status",
+        cell: (info: any) => {
+          const status = info.getValue() || "unknown";
+          const statusClass =
+            status === "active"
+              ? "bg-success"
+              : status === "deactivate"
+              ? "bg-danger"
+              : "bg-secondary";
+          return (
+            <div
+              className={`d-grid gap-2 text-white text-capitalize btn btn-sm ${statusClass}`}
+            >
+              {status}
+            </div>
+          );
+        },
+        accessorKey: "partner_status",
         enableColumnFilter: false,
       },
       {
@@ -111,10 +117,10 @@ const SearchTable = ({ tableData, pcategory, index = 0 }: any) => {
               <i className="ri-more-fill align-middle"></i>
             </Dropdown.Toggle>
             <Dropdown.Menu className="dropdown-menu-end">
-              <Dropdown.Item className="dropdown-item edit-item-btn"
+              <Dropdown.Item
+                className="dropdown-item edit-item-btn"
                 onClick={() => handlePartner(info.row.original)}
               >
-
                 <i className="ri-pencil-fill align-bottom me-2 text-muted"></i>{" "}
                 EDIT
               </Dropdown.Item>
@@ -146,9 +152,9 @@ const SearchTable = ({ tableData, pcategory, index = 0 }: any) => {
         SearchPlaceholder="Search..."
       />
 
-
       {selectedPartner && (
         <EditPartner
+          key={selectedPartner.id} // Add a key to force re-rendering
           show={show}
           setShow={setShow}
           partner={selectedPartner}

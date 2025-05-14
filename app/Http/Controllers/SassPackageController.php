@@ -112,6 +112,9 @@ class SassPackageController extends Controller
     public function update(UpdateSassPackageRequest $request, SassPackage $sasspackage)
     {
         $validatedData = $request->validated();
+
+
+
         $updatedata = $validatedData;
         $updatedata['custom_day'] = $request->custom_day ? $request->custom_day : 0;
         $updatedata['instance_config_details'] = $request->instance_config_details;

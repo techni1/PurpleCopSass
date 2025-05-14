@@ -80,6 +80,10 @@ class Organization extends Model
     {
         return $this->hasMany(User::class);
     }
+    public function partner()
+    {
+        return $this->hasMany(User::class, 'id', 'partner_id');
+    }
 
     public function createdBy()
     {

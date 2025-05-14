@@ -172,7 +172,7 @@ return [
         Barryvdh\Snappy\ServiceProvider::class,
     ])->toArray(),
 
-    'max_execution_time' => 300,
+    'max_execution_time' => 800,
 
     /*
     |--------------------------------------------------------------------------

@@ -21,7 +21,7 @@ export default function Menu({ auth, success }: any) {
                   <Col xs={12}>
                     <div className="d-flex align-items-lg-center flex-lg-row flex-column">
                       <div className="flex-grow-1">
-                        <h4 className="fs-16 mb-1">Billing Management</h4>
+                        <h4 className="fs-16 mb-1">Deal's Management</h4>
                       </div>
                       <div className="md-12 mt-lg-0">
                         <Row>
@@ -60,59 +60,41 @@ export default function Menu({ auth, success }: any) {
                     <Col>
                       <Card>
                         <Card.Body>
-                          <h5 className="card-title">Proforma Invoice</h5>
-                          <p className="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                          </p>
-                          <Link
-                            href={route("quotation.index")}
-                            className="btn btn-primary"
-                          >
-                            Create Proforma Invoice{" "}
-                          </Link>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                    <Col>
-                      <Card>
-                        <Card.Body>
-                          <h5 className="card-title">Billing</h5>
+                          <h5 className="card-title">Registered Deal</h5>
                           <p className="card-text">
                             Some quick example text to build on the card title
                             and make up the bulk of the card's content.
                           </p>
 
                           <Link
-                            href={route("billing.index")}
+                            href={route("dealregister.index")}
                             className="btn btn-primary"
                           >
-                            Create Billing{" "}
+                            Check Registered Deal{" "}
                           </Link>
                         </Card.Body>
                       </Card>
                     </Col>
-                  </Row>
-                  <Row>
+
                     <Col>
                       <Card>
                         <Card.Body>
-                          <h5 className="card-title">Due Payment</h5>
+                          <h5 className="card-title">
+                            Expiry Date Extend Request
+                          </h5>
                           <p className="card-text">
                             Some quick example text to build on the card title
                             and make up the bulk of the card's content.
                           </p>
-
                           <Link
-                            href={route("billing.duepayment")}
-                            className="btn btn-warning text-white"
+                            href={route("dealregister.getDealExtensionRequest")}
+                            className="btn btn-primary"
                           >
-                            Check Payment Due{" "}
+                            Check Extension Request{" "}
                           </Link>
                         </Card.Body>
                       </Card>
                     </Col>
-                    <Col></Col>
                   </Row>
                 </Card.Body>
               </Card>

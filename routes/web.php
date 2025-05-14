@@ -16,6 +16,7 @@ use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommissionRuleController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\DealregisterController;
 use App\Http\Controllers\DocumentAccessController;
 use App\Http\Controllers\DocumentCategoryController;
 use App\Http\Controllers\DocumentController;
@@ -42,6 +43,7 @@ use App\Http\Controllers\SupportteamManageController;
 use App\Http\Controllers\SupportTicketsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VelzonRoutesController;
+use App\Models\Dealregister;
 use App\Models\SupportTickets;
 use Illuminate\Support\Facades\Route;
 
@@ -130,6 +132,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/entities/{id}', [EntityController::class, 'getEntity']);
     Route::get('/departmentuser/{id}', [UserController::class, 'departmentuser']);
 
+    Route::get('/duepayment', [BillingController::class, 'duepayment'])->name('billing.duepayment');
+
     Route::post('/billing.cancel', [BillingController::class, 'cancelinvoice'])->name('billing.cancel');
 
     Route::post('/billing.regenrate', [BillingController::class, 'regenrate'])->name('billing.regenrate');
@@ -156,6 +160,19 @@ Route::middleware('auth')->group(function () {
     Route::resource('faq', FaqController::class);
 
     Route::resource('quotation', QuotationController::class);
+
+    Route::get('dealregister/menu', [DealregisterController::class, 'menu'])->name('dealregister.menu');
+
+    Route::get('dealregister/getDealExtensionRequest', [DealregisterController::class, 'getDealExtensionRequest'])->name('dealregister.getDealExtensionRequest');
+
+    Route::patch('extension/{id}', [DealregisterController::class, 'extension'])->name('dealregister.extension');
+
+    Route::post('dealregister/extensionstore', [DealregisterController::class, 'extensionstore'])->name('dealregister.extensionstore');
+
+    Route::get('dealregister/extensionshow/{id}', [DealregisterController::class, 'extensionshow'])->name('dealregister.extensionshow');
+
+
+    Route::resource('dealregister', DealregisterController::class);
 
 
     Route::get('billing.menu', [BillingController::class, 'menu'])->name('billing.menu');

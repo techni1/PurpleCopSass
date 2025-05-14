@@ -25,7 +25,6 @@ const SearchTable = ({ tableData, index = 0 }: any) => {
     setShowModal(false);
   };
 
-  
   const deleteEmployee = () => {
     if (offer) {
       router.delete(route("offers.destroy", offer), {
@@ -40,8 +39,7 @@ const SearchTable = ({ tableData, index = 0 }: any) => {
     }
   };
 
-
-  const handleEditClick=(offer:any)=>{
+  const handleEditClick = (offer: any) => {
     if (!offer) return;
     setOffer(offer);
     setShowModalEdit(true);
@@ -92,9 +90,16 @@ const SearchTable = ({ tableData, index = 0 }: any) => {
         header: "Status",
         accessorKey: "offer_status",
         enableColumnFilter: false,
+        cell: (info: any) => (
+          <span
+            className={`fw-semibold ${
+              info.getValue() == 1 ? "text-success" : "text-danger"
+            }`}
+          >
+            {info.getValue() == 1 ? "Active" : "Deactive"}
+          </span>
+        ),
       },
-
-
       {
         header: "Actions",
         id: "actions",
@@ -108,14 +113,12 @@ const SearchTable = ({ tableData, index = 0 }: any) => {
               <i className="ri-more-fill align-middle"></i>
             </Dropdown.Toggle>
             <Dropdown.Menu className="dropdown-menu-end">
-              <Dropdown.Item className="dropdown-item edit-item-btn"
-              onClick={() => handleEditClick(info.row.original)}
-              
+              <Dropdown.Item
+                className="dropdown-item edit-item-btn"
+                onClick={() => handleEditClick(info.row.original)}
               >
-              
                 <i className="ri-pencil-fill align-bottom me-2 text-muted"></i>{" "}
                 EDIT
-               
               </Dropdown.Item>
               {/* <Dropdown.Item
                 className="dropdown-item remove-item-btn text-danger"
@@ -145,11 +148,10 @@ const SearchTable = ({ tableData, index = 0 }: any) => {
         SearchPlaceholder="Search..."
       />
 
-      <Editoffers 
-      show={showModalEdit}
-      setShow={setShowModalEdit}
-      offer={offer}
-
+      <Editoffers
+        show={showModalEdit}
+        setShow={setShowModalEdit}
+        offer={offer}
       />
 
       <Modal show={showModal} onHide={handleCloseModal} centered>

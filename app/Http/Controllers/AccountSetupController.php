@@ -1,7 +1,9 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
+set_time_limit(0); // Removes time limit
 use App\Http\Requests\StoreAccountSetupRequest;
 use App\Http\Resources\AccountSetupResource;
 use App\Models\AccountSetup;
@@ -11,6 +13,11 @@ use App\Models\Organization;
 use App\Models\Sasspackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Config;
 
 class AccountSetupController extends Controller
 {
@@ -55,6 +62,12 @@ class AccountSetupController extends Controller
         ]);
     }
 
+    private function cloneDatabase($sourceDB, $newDB, $dbUser, $dbPassword)
+    {
+        $sourceDB = 'grc_sass';
+        $newDB = 'grc_sass';
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -78,7 +91,33 @@ class AccountSetupController extends Controller
         $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
 
+
+        // echo 'base_path: ' . . '<br>';
+        echo 'folder_name: ' . $request->folder_name . '<br>';
+        echo 'db_name: ' . $request->db_name . '<br>';
+        echo 'db_username: ' . $request->db_username . '<br>';
+        // exit;
+        // $newFolder = base_path($request->folder_name);
+        // $sourceFolder = base_path('grc');
+
+        $newDbName = $request->db_name;
+        $sourceDb = 'grc_sass';
+        $dbUser = $request->db_username;
+        $dbPassword = '';
+
+        $sourceFolder = "F:\\wamp64\\www\\" . 'grc';
+        $customPath = "F:\\wamp64\\www\\" . $request->folder_name;
+
+        try {
+
+            File::makeDirectory($customPath, 0755, true, true);
+            File::copyDirectory($sourceFolder, $customPath);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'An error occurred during account setup: ' . $e->getMessage()]);
+        }
+
         AccountSetup::create($data);
+
 
         return redirect()->route('accountsetup.index')->with('success', 'Account setup created successfully.');
     }
