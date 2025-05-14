@@ -14,7 +14,8 @@ const NavdataAdmin = () => {
   const [isOffers, setIsOffers] = useState<boolean>(false);
   const [isCurrency, setIsCurrentcy] = useState<boolean>(false);
   const [isFramworkPrice, setIsFramworkPrice] = useState<boolean>(false);
-  const [isPartnerManagement, setIsPartnerManagement] = useState<boolean>(false);
+  const [isPartnerManagement, setIsPartnerManagement] =
+    useState<boolean>(false);
   const [isMasterSetting, setIsMasterSetting] = useState<boolean>(false);
   const [isSmtpSetting, setIsSmtpSetting] = useState<boolean>(false);
   const [isBankSetting, setIsBankSetting] = useState<boolean>(false);
@@ -24,6 +25,7 @@ const NavdataAdmin = () => {
   const [iscurrentState, setIscurrentState] = useState("Dashboard");
   const [userData, setUserDta] = useState([]);
   const [isFaq, setIsFaq] = useState([]);
+  const [isDeal, setIsDeal] = useState([]);
 
   function updateIconSidebar(e: any) {
     if (e && e.target && e.target.getAttribute("sub-items")) {
@@ -50,6 +52,9 @@ const NavdataAdmin = () => {
     }
     if (iscurrentState !== "Faqs") {
       setIsFaq(false);
+    }
+    if (iscurrentState !== "Deal") {
+      setIsDeal(false);
     }
 
     if (iscurrentState !== "Menu") {
@@ -83,10 +88,7 @@ const NavdataAdmin = () => {
     if (iscurrentState !== "smtpsetting") {
       setIsSmtpSetting(false);
     }
-
   }, [history, iscurrentState, isUserManagement, isUserSubmenu]);
-
-
 
   const menuItems: any = [
     // {
@@ -111,7 +113,6 @@ const NavdataAdmin = () => {
       },
       stateVariables: isUserManagement,
       subItems: [
-
         {
           id: "userlist",
           label: "List",
@@ -131,8 +132,6 @@ const NavdataAdmin = () => {
           link: "/permission",
           parentId: "users",
         },
-
-
 
         {
           id: "designation",
@@ -158,7 +157,7 @@ const NavdataAdmin = () => {
       click: function (e: any) {
         setIsUserManagement(!isSassPackage);
         setIscurrentState("SassPackage");
-      }
+      },
     },
 
     {
@@ -170,7 +169,7 @@ const NavdataAdmin = () => {
       click: function (e: any) {
         setIsOffers(!isOffers);
         setIscurrentState("Offers");
-      }
+      },
     },
 
     {
@@ -182,9 +181,8 @@ const NavdataAdmin = () => {
       click: function (e: any) {
         setIsCurrentcy(!isCurrency);
         setIscurrentState("Currency");
-      }
+      },
     },
-
 
     {
       id: "framworkprice",
@@ -195,9 +193,8 @@ const NavdataAdmin = () => {
       click: function (e: any) {
         setIsFramworkPrice(!isFramworkPrice);
         setIscurrentState("FramworkPrice");
-      }
+      },
     },
-
 
     {
       id: "partner_management",
@@ -208,9 +205,19 @@ const NavdataAdmin = () => {
       click: function (e: any) {
         setIsFramworkPrice(!isPartnerManagement);
         setIscurrentState("PartnerManagement");
-      }
+      },
     },
-
+    {
+      id: "deal",
+      label: "Deal's",
+      icon: "ri-shake-hands-line",
+      link: route("dealregister.menu"),
+      stateVariables: isDeal,
+      click: function (e: any) {
+        setIsDeal(!isDeal);
+        setIscurrentState("Deal");
+      },
+    },
 
     {
       id: "master_setting",
@@ -221,7 +228,7 @@ const NavdataAdmin = () => {
       click: function (e: any) {
         setIsMasterSetting(!isMasterSetting);
         setIscurrentState("MasterSetting");
-      }
+      },
     },
     {
       id: "bank_setting",
@@ -232,7 +239,7 @@ const NavdataAdmin = () => {
       click: function (e: any) {
         setIsBankSetting(!isBankSetting);
         setIscurrentState("BankSetting");
-      }
+      },
     },
 
     {
@@ -244,9 +251,8 @@ const NavdataAdmin = () => {
       click: function (e: any) {
         setIsBilling(!isBilling);
         setIscurrentState("Billing");
-      }
+      },
     },
-
 
     {
       id: "supportmanagement",
@@ -257,11 +263,8 @@ const NavdataAdmin = () => {
       click: function (e: any) {
         setIsSupport(!isSupport);
         setIscurrentState("Support");
-      }
+      },
     },
-
-
-
 
     {
       id: "client",
@@ -288,7 +291,6 @@ const NavdataAdmin = () => {
           parentId: "entity",
         },
 
-
         {
           id: "accountsetup",
           label: "Account Setup",
@@ -297,7 +299,6 @@ const NavdataAdmin = () => {
         },
       ],
     },
-
 
     {
       id: "faq",
@@ -338,9 +339,6 @@ const NavdataAdmin = () => {
       ],
     },
 
-
-
-
     {
       id: "smtp_setting",
       label: "SMTP Setting",
@@ -350,12 +348,8 @@ const NavdataAdmin = () => {
       click: function (e: any) {
         setIsSmtpSetting(!isSmtpSetting);
         setIscurrentState("SmtpSetting");
-      }
+      },
     },
-
-
-    
-
   ];
   return <React.Fragment>{menuItems}</React.Fragment>;
 };

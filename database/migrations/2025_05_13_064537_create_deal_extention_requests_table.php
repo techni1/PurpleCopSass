@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dealregisters', function (Blueprint $table) {
+        Schema::create('deal_extention_requests', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('dealregister_id')->constrained('dealregisters')->onDelete('cascade');
             $table->foreignId('partner_id')->constrained('users')->onDelete('cascade');
-            $table->string('deal_name');
-            $table->string('contact_person');
-            $table->string('contact_number');
-            $table->string('contact_email');
-            $table->date('expiry_date');
-            $table->date('extension_date')->nullable();
-            $table->string('deal_value');
-            $table->enum('deal_status', ['open', 'won', 'lost']);
-            $table->text('deal_description')->nullable();
-            $table->string('deal_source')->nullable();
+            $table->date('extension_date');
+            $table->string('extension_reason')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->date('approved_expirydate')->nullable();
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dealregisters');
+        Schema::dropIfExists('deal_extention_requests');
     }
 };

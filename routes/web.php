@@ -43,6 +43,7 @@ use App\Http\Controllers\SupportteamManageController;
 use App\Http\Controllers\SupportTicketsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VelzonRoutesController;
+use App\Models\Dealregister;
 use App\Models\SupportTickets;
 use Illuminate\Support\Facades\Route;
 
@@ -159,6 +160,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('faq', FaqController::class);
 
     Route::resource('quotation', QuotationController::class);
+
+    Route::get('dealregister/menu', [DealregisterController::class, 'menu'])->name('dealregister.menu');
+
+    Route::get('dealregister/getDealExtensionRequest', [DealregisterController::class, 'getDealExtensionRequest'])->name('dealregister.getDealExtensionRequest');
+
+    Route::patch('extension/{id}', [DealregisterController::class, 'extension'])->name('dealregister.extension');
+
+    Route::post('dealregister/extensionstore', [DealregisterController::class, 'extensionstore'])->name('dealregister.extensionstore');
+
+    Route::get('dealregister/extensionshow/{id}', [DealregisterController::class, 'extensionshow'])->name('dealregister.extensionshow');
 
 
     Route::resource('dealregister', DealregisterController::class);
